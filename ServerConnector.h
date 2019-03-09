@@ -8,12 +8,12 @@
 #ifndef SERVER_CONNECTOR_H
 #define SERVER_CONNECTOR_H
 
-#include <string>
-
 /*
 * This file describes class ServerConnector,
 * which helps to connect and send requests to the server.
 */
+
+#include <string>
 
 class ServerConnector {
 private:
