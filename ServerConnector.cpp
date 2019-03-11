@@ -72,7 +72,6 @@ std::string ServerConnector::request(std::string request)
 	}
 	/* Initialization */
 	char buffer[BUFFER_SIZE];
-	std::string answer;
 	int result;
 
 	/* Sending request to the server */
@@ -87,6 +86,5 @@ std::string ServerConnector::request(std::string request)
 		throw "Failed to receive answer from server";
 	}
 
-	answer = buffer;
-	return answer;
+	return buffer;
 }
