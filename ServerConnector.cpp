@@ -53,7 +53,7 @@ void ServerConnector::to_connect(std::string address, int port)
 
 void ServerConnector::close_connection()
 {
-	if (_connected) {
+	if (!_connected) {
 		return;
 	}
 	close(_sockfd);
@@ -75,7 +75,8 @@ std::string ServerConnector::request(std::string request)
 	int result;
 
 	/* Sending request to the server */
-	result = send(_sockfd, request.c_str(), request.length(), 0);
+	snprintf(buffer, BUFFER_SIZE, "%s", request.c_str());
+	result = send(_sockfd, buffer, BUFFER_SIZE, 0);
 	if (result < 0) {
 		throw "Failed to send request to the server";
 	}
