@@ -5,7 +5,7 @@
 * Date: 09.03.19
 */
 
-#define BUFFER_SIZE 256
+#define BUFFER_SIZE 512
 
 /*
 * This file defines methods of class ServerConnector, which is described in ServerConnector.h
