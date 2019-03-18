@@ -26,33 +26,33 @@ private:
 	std::string _type;
 	std::string _foreman_number;
 
-  /*
-  *set_new_user() - need for more comfortable using in registration process.
-  */
+  	/*
+  	*set_new_user() - need for more comfortable using in registration process.
+  	*/
 	void set_new_user(std::string& name, std::string& last_name,
 	 std::string& middle_name, std::string& number, std::string& password,
 	  std::string& type, std::string& foreman_number)     {
 		_name = name;
-      	_last_name = last_name;
-      	_middle_name = middle_name;
-      	_number = number;
-      	_password = password;
-      	_type = type;
-      	_foreman_number = foreman_number;
-    }
+      		_last_name = last_name;
+      		_middle_name = middle_name;
+      		_number = number;
+      		_password = password;
+      		_type = type;
+      		_foreman_number = foreman_number;
+   	}
 
-    /*
-    *enter_old_user() - need for more comfortable using in entrance process.
-    */
+    	/*
+    	*enter_old_user() - need for more comfortable using in entrance process.
+    	*/
 	void enter_old_user(std::string& number, std::string& password)     {
-      	_name = "";
-      	_last_name = "";
-       	_middle_name = "";
-       	_number = number;
-       	_password = password;
-       	_type = "";
-       	_foreman_number = "";
-    }
+      		_name = "";
+      		_last_name = "";
+       		_middle_name = "";
+       		_number = number;
+       		_password = password;
+       		_type = "";
+       		_foreman_number = "";
+    	}
 
 	/*
   	*to_json() - generate JSON request by rapidjson.
@@ -84,8 +84,8 @@ private:
     		info_val.AddMember("foreman_number", tmp, allocator);
     		document.AddMember("info", info_val, allocator);
     	}
-		else
-		{
+	else
+	{
        		document.SetObject();
        		document.AddMember("request", REQUEST_LOGIN, allocator);
        		info_val.SetObject();
@@ -94,15 +94,15 @@ private:
        		tmp.SetString(rapidjson::StringRef(_password.c_str()));
        		info_val.AddMember("password", tmp, allocator);
        		document.AddMember("info", info_val, allocator);
-		}
-     return document;
+	}
+	return document;
    }
 
-  /*
-  *serialize() - make JSON request more suitable and useful
-  *for working with server.
-  *This method is nessesary in process of formation request.
-  */
+  	/*
+  	*serialize() - make JSON request more suitable and useful
+  	*for working with server.
+  	*This method is nessesary in process of formation request.
+  	*/
  	template <typename Writer>
 	void serialize(Writer& writer) const
   	{
@@ -127,29 +127,29 @@ private:
 	}
 
 public:
-  RequestFormation()
-  {
+ 	RequestFormation()
+  	{
 
-  }
+  	}
 
-  ~RequestFormation()
-  {
+ 	~RequestFormation()
+ 	{
 
-  };
+  	};
 
-  /*
-  *to_register() - register a new user's account.
-  *It's first function which you need.
-  */
+  	/*
+  	*to_register() - register a new user's account.
+  	*It's first function which you need.
+  	*/
 	std::string to_register(std::string name, std::string last_name,
    	 std::string middle_name, std::string number, std::string password,
-      std::string type, std::string foreman_number)
+          std::string type, std::string foreman_number)
   	{
-    	try {
+    		try {
 			/*First step: accept full data from user, generate it to JSON request
 			*and send to the server.*/
-    		RequestFormation sx;
-    		sx.set_new_user(name, last_name, middle_name, number, password, type, foreman_number);
+    			RequestFormation sx;
+    			sx.set_new_user(name, last_name, middle_name, number, password, type, foreman_number);
 			rapidjson::Document document = sx.to_json(REQUEST_REGISTRATION);
 			rapidjson::StringBuffer buffer;
 			rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
@@ -173,16 +173,16 @@ public:
 		}
   	}
 
-  /*
-  *to_enter() - enter to user's account. It's second function which you need.
-  */
+ 	/*
+ 	*to_enter() - enter to user's account. It's second function which you need.
+  	*/
 	std::string to_enter(std::string number, std::string password)
 	{
-    	try {
+    		try {
 			/*First step: accept full data from user, generate it to JSON request
 			*and send to the server.*/
-    		RequestFormation sx;
-    		sx.enter_old_user(number, password);
+    			RequestFormation sx;
+    			sx.enter_old_user(number, password);
 			rapidjson::Document document = sx.to_json(REQUEST_LOGIN);
 			rapidjson::StringBuffer buffer;
 			rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
