@@ -7,6 +7,8 @@
 
 /*Ворзвращать ФИО(передача аргументов по ссылке), тип пользователя, static method, save answer to LogPrinter, warning of error in header of method, create an ServerConnection object in comstructor an destructor, info about server give from define*/
 
+#define ADRESS "192.168.43.33"
+#define PORT 4512
 
 #include "RequestFormer.h"
 #include "requests.h"
@@ -16,10 +18,11 @@
 #include <iostream>
 #include <cstdio>
 #include "ServerConnector.h"
+#include "LogPrinter"
 
 RequestFormer::RequestFormer()
 {
-  _sc.to_connect("192.168.43.33", 4512);
+  _sc.to_connect(ADRESS, PORT);
 }
 
 RequestFormer::~RequestFormer()
@@ -48,7 +51,7 @@ void RequestFormer::enter_old_user(std::string& number, std::string& password)
 	_number = number;
 	_password = password;
 	_type = "";
-	_foreman_number = "";
+	_foreman_number = "NULL";
 }
 
 rapidjson::Document RequestFormer::to_json(std::string request)
@@ -164,6 +167,8 @@ std::string RequestFormer::to_enter(std::string number, std::string password)
 			return _type_;
 		else
 			return new_doc["info"]["description"].GetString();
+
+    //LogPrinter::print();
 	}
 	catch (const char *error) {
 		return error;

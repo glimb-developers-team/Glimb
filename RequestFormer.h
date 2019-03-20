@@ -42,7 +42,7 @@ private:
 
 	/*
 	*to_json() - generate JSON request by rapidjson.
-	*It uses in another methods - to_enter() and to_register()(future method).
+	*It uses in another methods - to_enter() and to_register().
 	*/
 	rapidjson::Document to_json(std::string request);
 
