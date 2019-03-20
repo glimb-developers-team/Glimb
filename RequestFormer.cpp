@@ -18,7 +18,7 @@
 #include <iostream>
 #include <cstdio>
 #include "ServerConnector.h"
-#include "LogPrinter"
+//#include "LogPrinter"
 
 RequestFormer::RequestFormer()
 {
@@ -51,7 +51,7 @@ void RequestFormer::enter_old_user(std::string& number, std::string& password)
 	_number = number;
 	_password = password;
 	_type = "";
-	_foreman_number = "NULL";
+	_foreman_number = "";
 }
 
 rapidjson::Document RequestFormer::to_json(std::string request)
@@ -124,7 +124,9 @@ std::string RequestFormer::to_register(std::string name, std::string last_name,
 		/*First step: accept full data from user, generate it to JSON request
 		*and send to the server.*/
 		RequestFormer sx;
-		sx.set_new_user(name, last_name, middle_name, number, password, type, foreman_number);
+    if (type == "foreman")
+      foreman_number = "NULL";
+    sx.set_new_user(name, last_name, middle_name, number, password, type, foreman_number);
 		rapidjson::Document document = sx.to_json(REQUEST_REGISTRATION);
 		rapidjson::StringBuffer buffer;
 		rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
