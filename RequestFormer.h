@@ -28,8 +28,8 @@ private:
 	*set_new_user() - need for more comfortable using in registration process.
 	*/
 	void set_new_user(std::string& name, std::string& last_name,
-		std::string& middle_name, std::string& number,
-		std::string& password, std::string& type, std::string& foreman_number);
+			  std::string& middle_name, std::string& number,
+			  std::string& password, std::string& type, std::string& foreman_number);
 
 	/*
 	*enter_old_user() - need for more comfortable using in entrance process.
@@ -65,8 +65,8 @@ public:
 	*Else method returns "1", if there is anyone error.
 	*/
 	int to_register(std::string name, std::string last_name, std::string middle_name, 
-		std::string number, std::string password, std::string type, 
-		std::string foreman_number);
+			std::string number, std::string password, std::string type, 
+			std::string foreman_number);
 
 	/*
 	*to_enter() - enter to user's account. It's second function which you need.
