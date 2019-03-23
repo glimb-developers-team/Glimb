@@ -40,7 +40,9 @@ void RequestFormer::disconnect()
     _sc.close_connection();
 }
 
-void RequestFormer::set_new_user(std::string& name, std::string& last_name, 	std::string& middle_name, std::string& number, std::string& password, 	std::string& type, std::string& foreman_number)
+void RequestFormer::set_new_user(std::string& name, std::string& last_name,
+				 std::string& middle_name, std::string& number, 
+				 std::string& password, std::string& type, std::string& foreman_number)
 {
 	_name = name;
 	_last_name = last_name;
@@ -125,8 +127,8 @@ void RequestFormer::serialize(Writer& writer) const
 }
 
 int RequestFormer::to_register(std::string name, std::string last_name,
- std::string middle_name, std::string number, std::string password,
-  std::string type, std::string foreman_number)
+			       std::string middle_name, std::string number, std::string password,
+			       std::string type, std::string foreman_number)
 {
 	try {
 		/*First step: accept full data from new user, generate it to JSON request
@@ -175,7 +177,7 @@ std::string RequestFormer::to_enter(std::string number, std::string password)
 		rapidjson::Document new_doc;
 		new_doc.Parse(doc.c_str());
 		std::string _type_ = new_doc["type"].GetString();
-    //LogPrinter::print("OK");
+    		//LogPrinter::print("OK");
 		if (_type_ == "ok")
 			return "1";
 		else
