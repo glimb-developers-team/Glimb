@@ -8,12 +8,10 @@
 #ifndef REQUEST_FORMER_H
 #define REQUEST_FORMER_H
 
-
 #include "rapidjson/document.h"
 #include <string>
 #include "rapidjson/writer.h"
 #include "ServerConnector.h"
-
 
 class RequestFormer {
 private:
@@ -24,16 +22,14 @@ private:
 	std::string _password;
 	std::string _type;
 	std::string _foreman_number;
-
-	ServerConnector _sc;
+	static ServerConnector _sc;
 
 	/*
 	*set_new_user() - need for more comfortable using in registration process.
 	*/
 	void set_new_user(std::string& name, std::string& last_name,
-										std::string& middle_name, std::string& number,
-										std::string& password,
-										std::string& type, std::string& foreman_number);
+		std::string& middle_name, std::string& number,
+		std::string& password, std::string& type, std::string& foreman_number);
 
 	/*
 	*enter_old_user() - need for more comfortable using in entrance process.
@@ -58,17 +54,24 @@ public:
 
 	~RequestFormer();
 
+	static void connect_to_server();
+
+	static void disconnect();
+
 	/*
 	*to_register() - register a new user's account.
 	*It's first function which you need.
+	*Method returns "0", if registration complete right.
+	*Else method returns "1", if there is anyone error.
 	*/
-	std::string to_register(std::string name, std::string last_name,
-													std::string middle_name, std::string number,
-													std::string password, std::string type,
-													std::string foreman_number);
+	int to_register(std::string name, std::string last_name, std::string middle_name, 
+		std::string number, std::string password, std::string type, 
+		std::string foreman_number);
 
 	/*
 	*to_enter() - enter to user's account. It's second function which you need.
+	*Method returns "1", if user exists and his data is right.
+	*Else method returns error.
 	*/
 	std::string to_enter(std::string number, std::string password);
 

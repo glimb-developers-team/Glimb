@@ -5,8 +5,6 @@
 * Date: 14.03.19
 */
 
-/*Ворзвращать ФИО(передача аргументов по ссылке), тип пользователя, static method, save answer to LogPrinter, warning of error in header of method, create an ServerConnection object in comstructor an destructor, info about server give from define*/
-
 #define ADRESS "192.168.43.33"
 #define PORT 4512
 
@@ -18,11 +16,13 @@
 #include <iostream>
 #include <cstdio>
 #include "ServerConnector.h"
-//#include "LogPrinter"
+#include "LogPrinter.h"
+
+ServerConnector RequestFormer::_sc;
 
 RequestFormer::RequestFormer()
 {
-  _sc.to_connect(ADRESS, PORT);
+
 }
 
 RequestFormer::~RequestFormer()
@@ -30,9 +30,17 @@ RequestFormer::~RequestFormer()
 
 }
 
-void RequestFormer::set_new_user(std::string& name, std::string& last_name,
- std::string& middle_name, std::string& number, std::string& password,
-  std::string& type, std::string& foreman_number)
+void RequestFormer::connect_to_server()
+{
+    _sc.to_connect(ADRESS, PORT);
+}
+
+void RequestFormer::disconnect()
+{
+    _sc.close_connection();
+}
+
+void RequestFormer::set_new_user(std::string& name, std::string& last_name, 	std::string& middle_name, std::string& number, std::string& password, 	std::string& type, std::string& foreman_number)
 {
 	_name = name;
 	_last_name = last_name;
@@ -116,34 +124,36 @@ void RequestFormer::serialize(Writer& writer) const
 	#endif
 }
 
-std::string RequestFormer::to_register(std::string name, std::string last_name,
+int RequestFormer::to_register(std::string name, std::string last_name,
  std::string middle_name, std::string number, std::string password,
   std::string type, std::string foreman_number)
 {
 	try {
-		/*First step: accept full data from user, generate it to JSON request
+		/*First step: accept full data from new user, generate it to JSON request
 		*and send to the server.*/
 		RequestFormer sx;
-    if (type == "foreman")
-      foreman_number = "NULL";
-    sx.set_new_user(name, last_name, middle_name, number, password, type, foreman_number);
+		if (type == "foreman")
+			foreman_number = "NULL";
+		sx.set_new_user(name, last_name, middle_name, number, password, type, foreman_number);
 		rapidjson::Document document = sx.to_json(REQUEST_REGISTRATION);
 		rapidjson::StringBuffer buffer;
 		rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
 		document.Accept(writer);
 		const std::string& str = buffer.GetString();
+			
 		/*Second step: accept answer from server, parse and trancfer to user.*/
 		std::string doc = _sc.request(str);
 		rapidjson::Document new_doc;
 		new_doc.Parse(doc.c_str());
 		std::string _type_ = new_doc["type"].GetString();
 		if (_type_ == "ok")
-			return _type_;
+			return 1;
 		else
 			throw (const char*)new_doc["info"]["description"].GetString();
+		//LogPrinter::print(str);
 	}
 	catch (const char *error) {
-		return error;
+		return 0;
 	}
 }
 
@@ -165,12 +175,11 @@ std::string RequestFormer::to_enter(std::string number, std::string password)
 		rapidjson::Document new_doc;
 		new_doc.Parse(doc.c_str());
 		std::string _type_ = new_doc["type"].GetString();
+    //LogPrinter::print("OK");
 		if (_type_ == "ok")
-			return _type_;
+			return "1";
 		else
-			return new_doc["info"]["description"].GetString();
-
-    //LogPrinter::print();
+			throw (const char*)new_doc["info"]["description"].GetString();
 	}
 	catch (const char *error) {
 		return error;
