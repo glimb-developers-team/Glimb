@@ -28,8 +28,8 @@ private:
 	*set_new_user() - need for more comfortable using in registration process.
 	*/
 	void set_new_user(std::string& name, std::string& last_name,
-			  std::string& middle_name, std::string& number,
-			  std::string& password, std::string& type, std::string& foreman_number);
+		std::string& middle_name, std::string& number,
+		std::string& password, std::string& type, std::string& foreman_number);
 
 	/*
 	*enter_old_user() - need for more comfortable using in entrance process.
@@ -61,17 +61,20 @@ public:
 	/*
 	*to_register() - register a new user's account.
 	*It's first function which you need.
-	*Method returns "0", if registration complete right.
-	*Else method returns "1", if there is anyone error.
+	*Method returns "1", if user exists and his data is right.
+	*Else method returns error tied with server or user.
+	*Can throw "Such user already exists", "Password is too short" or 
+	*"Number of foreman is not right" of type const char *.
 	*/
 	int to_register(std::string name, std::string last_name, std::string middle_name, 
-			std::string number, std::string password, std::string type, 
-			std::string foreman_number);
+		std::string number, std::string password, std::string type, 
+		std::string foreman_number);
 
 	/*
 	*to_enter() - enter to user's account. It's second function which you need.
 	*Method returns "1", if user exists and his data is right.
-	*Else method returns error.
+	*Else method returns error tied with server or user.
+	*Can throw "User does not exist" or "Password is failed" of type const char *.
 	*/
 	std::string to_enter(std::string number, std::string password);
 
