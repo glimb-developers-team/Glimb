@@ -41,7 +41,7 @@ void RequestFormer::disconnect()
 }
 
 void RequestFormer::set_new_user(std::string& name, std::string& last_name,
-				 std::string& middle_name, std::string& number, 
+				 std::string& middle_name, std::string& number,
 				 std::string& password, std::string& type, std::string& foreman_number)
 {
 	_name = name;
@@ -126,7 +126,7 @@ void RequestFormer::serialize(Writer& writer) const
 	#endif
 }
 
-int RequestFormer::to_register(std::string name, std::string last_name,
+std::string RequestFormer::to_register(std::string name, std::string last_name,
 			       std::string middle_name, std::string number, std::string password,
 			       std::string type, std::string foreman_number)
 {
@@ -142,20 +142,30 @@ int RequestFormer::to_register(std::string name, std::string last_name,
 		rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
 		document.Accept(writer);
 		const std::string& str = buffer.GetString();
-			
+
 		/*Second step: accept answer from server, parse and trancfer to user.*/
 		std::string doc = _sc.request(str);
 		rapidjson::Document new_doc;
 		new_doc.Parse(doc.c_str());
+		std::string buf;
 		std::string _type_ = new_doc["type"].GetString();
 		if (_type_ == "ok")
-			return 1;
+		{
+			buf = "\"type\" : ";
+			buf = buf + _type_;
+			LogPrinter::print(buf);
+			return buf;
+		}
 		else
+		{
+			buf = "\"error\" : ";
+			buf = buf + new_doc["info"]["description"].GetString();
+			LogPrinter::print(buf);
 			throw (const char*)new_doc["info"]["description"].GetString();
-		//LogPrinter::print(str);
+		}
 	}
 	catch (const char *error) {
-		return 0;
+		return error;
 	}
 }
 
@@ -176,12 +186,22 @@ std::string RequestFormer::to_enter(std::string number, std::string password)
 		std::string doc = _sc.request(str);
 		rapidjson::Document new_doc;
 		new_doc.Parse(doc.c_str());
+		std::string buf;
 		std::string _type_ = new_doc["type"].GetString();
-    		//LogPrinter::print("OK");
 		if (_type_ == "ok")
-			return "1";
+		{
+			buf = "\"type\" : ";
+			buf = buf + _type_;
+			LogPrinter::print(buf);
+			return buf;
+		}
 		else
+		{
+			buf = "\"error\" : ";
+			buf = buf + new_doc["info"]["description"].GetString();
+			LogPrinter::print(buf);
 			throw (const char*)new_doc["info"]["description"].GetString();
+		}
 	}
 	catch (const char *error) {
 		return error;

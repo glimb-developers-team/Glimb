@@ -12,6 +12,7 @@
 #include <string>
 #include "rapidjson/writer.h"
 #include "ServerConnector.h"
+#include "LogPrinter.h"
 
 class RequestFormer {
 private:
@@ -63,11 +64,11 @@ public:
 	*It's first function which you need.
 	*Method returns "1", if user exists and his data is right.
 	*Else method returns error tied with server or user.
-	*Can throw "Such user already exists", "Password is too short" or 
+	*Can throw "Such user already exists", "Password is too short" or
 	*"Number of foreman is not right" of type const char *.
 	*/
-	int to_register(std::string name, std::string last_name, std::string middle_name, 
-		std::string number, std::string password, std::string type, 
+	static std::string to_register(std::string name, std::string last_name, std::string middle_name,
+		std::string number, std::string password, std::string type,
 		std::string foreman_number);
 
 	/*
@@ -76,7 +77,7 @@ public:
 	*Else method returns error tied with server or user.
 	*Can throw "User does not exist" or "Password is failed" of type const char *.
 	*/
-	std::string to_enter(std::string number, std::string password);
+	static std::string to_enter(std::string number, std::string password);
 
 };
 
