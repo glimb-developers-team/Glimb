@@ -151,8 +151,7 @@ std::string RequestFormer::to_register(std::string name, std::string last_name,
 		std::string _type_ = new_doc["type"].GetString();
 		if (_type_ == "ok")
 		{
-			buf = "\"type\" : ";
-			buf = buf + _type_;
+			buf = name + last_name + middle_name;
 			LogPrinter::print(buf);
 			return buf;
 		}
@@ -190,8 +189,9 @@ std::string RequestFormer::to_enter(std::string number, std::string password)
 		std::string _type_ = new_doc["type"].GetString();
 		if (_type_ == "ok")
 		{
-			buf = "\"type\" : ";
-			buf = buf + _type_;
+			buf = new_doc["info"]["name"].GetString();
+      buf += new_doc["info"]["last_name"].GetString();
+      buf += new_doc["info"]["middle_name"].GetString();
 			LogPrinter::print(buf);
 			return buf;
 		}
