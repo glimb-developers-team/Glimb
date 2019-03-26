@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>414</width>
-    <height>350</height>
+    <height>381</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -22,137 +22,22 @@
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">
-     <item row="6" column="0" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="label_7">
+     <item row="5" column="0" alignment="Qt::AlignRight">
+      <widget class="QLabel" name="PasswordRequestor">
        <property name="text">
         <string>  Повтор пароля*</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="lineEdit_5">
-       <property name="minimumSize">
-        <size>
-         <width>250</width>
-         <height>21</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>250</width>
-         <height>21</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="lineEdit_4">
-       <property name="minimumSize">
-        <size>
-         <width>250</width>
-         <height>21</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>250</width>
-         <height>21</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_3">
-       <property name="minimumSize">
-        <size>
-         <width>250</width>
-         <height>21</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>250</width>
-         <height>21</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>  Пароль*</string>
-       </property>
-      </widget>
-     </item>
      <item row="2" column="0" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="MiddleName">
        <property name="text">
         <string>Отчество</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="0" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Эл. Почта*</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Имя*</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="1">
-      <widget class="QLineEdit" name="lineEdit_7">
-       <property name="minimumSize">
-        <size>
-         <width>250</width>
-         <height>21</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>250</width>
-         <height>21</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QLineEdit" name="lineEdit_6">
-       <property name="minimumSize">
-        <size>
-         <width>250</width>
-         <height>21</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>250</width>
-         <height>21</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>Телефон*</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Фамилия*</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit">
+      <widget class="QLineEdit" name="lineEdit_Name">
        <property name="enabled">
         <bool>true</bool>
        </property>
@@ -170,15 +55,84 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="0" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="label_8">
+     <item row="6" column="0" alignment="Qt::AlignRight">
+      <widget class="QLabel" name="PhoneContractor">
        <property name="text">
         <string>Тел. исполнителя**</string>
        </property>
       </widget>
      </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="lineEdit_Password">
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
+      </widget>
+     </item>
      <item row="7" column="1">
-      <widget class="QLineEdit" name="lineEdit_8">
+      <widget class="QRadioButton" name="radioButton_Contractor">
+       <property name="text">
+        <string>Я исполнитель</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="lineEdit_MiddleName">
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="lineEdit_Phone">
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0" alignment="Qt::AlignRight">
+      <widget class="QLabel" name="Password">
+       <property name="text">
+        <string>  Пароль*</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" alignment="Qt::AlignRight">
+      <widget class="QLabel" name="LastName">
+       <property name="text">
+        <string>Фамилия*</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLineEdit" name="lineEdit_PhoneContractor">
        <property name="minimumSize">
         <size>
          <width>250</width>
@@ -205,8 +159,31 @@
        </property>
       </widget>
      </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="lineEdit_RepeatPassword">
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" alignment="Qt::AlignRight">
+      <widget class="QLabel" name="Name">
+       <property name="text">
+        <string>Имя*</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_2">
+      <widget class="QLineEdit" name="lineEdit_LastName">
        <property name="enabled">
         <bool>true</bool>
        </property>
@@ -224,10 +201,24 @@
        </property>
       </widget>
      </item>
+     <item row="3" column="0" alignment="Qt::AlignRight">
+      <widget class="QLabel" name="Phone">
+       <property name="text">
+        <string>Телефон*</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QRadioButton" name="radioButton_Client">
+       <property name="text">
+        <string>Я заказчик</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item row="2" column="0">
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="Button_RegistrationTwo">
      <property name="text">
       <string>Регистрация</string>
      </property>
@@ -236,7 +227,7 @@
    <item row="1" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QLabel" name="label_9">
+      <widget class="QLabel" name="Required_line">
        <property name="maximumSize">
         <size>
          <width>16777215</width>
@@ -249,7 +240,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_10">
+      <widget class="QLabel" name="Contractor_line">
        <property name="enabled">
         <bool>true</bool>
        </property>
@@ -269,15 +260,14 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>lineEdit</tabstop>
-  <tabstop>lineEdit_2</tabstop>
-  <tabstop>lineEdit_3</tabstop>
-  <tabstop>lineEdit_4</tabstop>
-  <tabstop>lineEdit_5</tabstop>
-  <tabstop>lineEdit_6</tabstop>
-  <tabstop>lineEdit_7</tabstop>
-  <tabstop>lineEdit_8</tabstop>
-  <tabstop>pushButton</tabstop>
+  <tabstop>lineEdit_Name</tabstop>
+  <tabstop>lineEdit_LastName</tabstop>
+  <tabstop>lineEdit_MiddleName</tabstop>
+  <tabstop>lineEdit_Phone</tabstop>
+  <tabstop>lineEdit_Password</tabstop>
+  <tabstop>lineEdit_RepeatPassword</tabstop>
+  <tabstop>lineEdit_PhoneContractor</tabstop>
+  <tabstop>Button_RegistrationTwo</tabstop>
  </tabstops>
  <resources/>
  <connections/>

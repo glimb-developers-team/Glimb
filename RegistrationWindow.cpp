@@ -1,13 +1,17 @@
 #include "RegistrationWindow.h"
 #include "ui_RegistrationWindow.h"
 #include <QMessageBox>
+#include "RequestFormer.h"
+//#include "former.h"
+
+extern RequestFormer former;
 
 RegistrationWindow::RegistrationWindow(QWidget *parent) :
 
     QDialog(parent),
     ui(new Ui::RegistrationWindow)
 {
-    this->setWindowTitle("Новое название");
+
     ui->setupUi(this);
 }
 
@@ -18,7 +22,27 @@ RegistrationWindow::~RegistrationWindow()
 
 void RegistrationWindow::on_pushButton_clicked()
 {
-    QMessageBox::critical(this, "Внимание!", "Неверно введена почта");
-    QMessageBox::critical(this, "Внимание!", "Неверно введен логин прораба");
-    QMessageBox::critical(this, "Внимание!", "Вы заполнили не все поля для регистрации");
+    std::string answer;
+    try {
+        answer = former.to_register(ui->lineEdit_Name->text().toUtf8().constData(),
+                                    ui->lineEdit_LastName->text().toUtf8().constData(),
+                                    ui->lineEdit_MiddleName->text().toUtf8().constData(),
+                                    ui->lineEdit_Password->text().toUtf8().constData(),
+                                    ui->lineEdit_Phone->text().toUtf8().constData(),
+                                    ui->lineEdit_PhoneContractor->text().toUtf8().constData(),
+                                    ui->radioButton_Client->text().toUtf8().constData()
+                                    );
+
+        if (answer == "ok") {
+
+
+        }
+        else {
+            QMessageBox::critical(this, "Внимание!", answer.c_str());
+        }
+    }
+    catch (char const *error) {
+        QMessageBox::critical(this, "Внимание!", error);
+    }
+
 }

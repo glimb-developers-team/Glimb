@@ -2,12 +2,16 @@
 #include "ui_LoginWindow.h"
 #include "RegistrationWindow.h"
 #include <QMessageBox>
+#include "former.h"
+#include <string>
+
 
 LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::LoginWindow)
 {
     ui->setupUi(this);
+    sWindow = new ClientWindow();
 }
 
 LoginWindow::~LoginWindow()
@@ -18,13 +22,30 @@ LoginWindow::~LoginWindow()
 
 void LoginWindow::on_pushButton_4_clicked()
 {
-    QMessageBox::critical(this, "Внимание!", "Неверно введен пароль");
+    
+    std::string login;
+    login = ui->lineEdit_Login->text().toUtf8().constData();
+    
+    std::string password;
+    password = ui -> lineEdit_Password->text().toUtf8().constData();
 
-    QMessageBox::critical(this, "Внимание!", "Неверно введен логин");
-    QMessageBox::warning(this, "Предупреждение!", "Такой логин уже существует");
+    std::string answer;
 
-    QMessageBox::critical(this, "Внимание!", "Неверно введен ID Пользователя");
+    try {
+        answer = former.to_enter(login, password);
 
+        if (answer == "ok"){
+            sWindow ->show();
+            this->close();
+        }
+        else {
+            QMessageBox::critical(this, "Внимание!", answer.c_str());
+        }
+    }
+    catch (char const *error) {
+
+        QMessageBox::critical(this, "Внимание!", error);
+    }
 }
 
 void LoginWindow::on_pushButton_3_clicked()
