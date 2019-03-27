@@ -2,7 +2,6 @@
 #include "ui_LoginWindow.h"
 #include "RegistrationWindow.h"
 #include <QMessageBox>
-#include "former.h"
 #include <string>
 
 
@@ -20,7 +19,7 @@ LoginWindow::~LoginWindow()
 }
 
 
-void LoginWindow::on_pushButton_4_clicked()
+void LoginWindow::on_pushButton_Login_clicked()
 {
     
     std::string login;
@@ -48,7 +47,7 @@ void LoginWindow::on_pushButton_4_clicked()
     }
 }
 
-void LoginWindow::on_pushButton_3_clicked()
+void LoginWindow::on_pushButton_Registration_clicked()
 {
     RegistrationWindow window;
     window.setModal(true);

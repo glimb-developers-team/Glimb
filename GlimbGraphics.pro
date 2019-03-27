@@ -26,12 +26,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     LoginWindow.cpp \
-    RegistrationWindow.cpp
+    RegistrationWindow.cpp \
+    LogPrinter.cpp \
+    RequestFormer \
+    ServerConnector \
+    clientwindow
+
 
 HEADERS += \
     RegistrationWindow.h \
-    LoginWindow.h
+    LoginWindow.h \
+    LogPrinter.h \
+    RequestFormer.h \
+    requests.h \
+    ServerConnector.h \
+    clientwindow.h
+
 
 FORMS += \
     LoginWindow.ui \
-    RegistrationWindow.ui
+    RegistrationWindow.ui \
+    clientwindow.ui
+
