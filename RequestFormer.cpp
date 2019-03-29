@@ -130,94 +130,85 @@ void RequestFormer::to_register(std::string name, std::string last_name,
 			       std::string middle_name, std::string number, std::string password,
 			       std::string type, std::string foreman_number)
 {
-	try {
-		/*
-		*First step: accept full data from user, generate it to JSON request
-		*and send to the server.
-		*/
-		RequestFormer sx;
-		if (type == "foreman")
-			foreman_number = "NULL";
-		sx.set_new_user(name, last_name, middle_name, number, password, type, foreman_number);
-		rapidjson::Document document = sx.to_json(REQUEST_REGISTRATION);
-		rapidjson::StringBuffer buffer;
-		rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
-		document.Accept(writer);
-		const std::string& str = buffer.GetString();
+	/*
+	*First step: accept full data from user, generate it to JSON request
+	*and send to the server.
+	*/
+	RequestFormer sx;
+	if (type == "foreman")
+		foreman_number = "NULL";
+	sx.set_new_user(name, last_name, middle_name, number, password, type, foreman_number);
+	rapidjson::Document document = sx.to_json(REQUEST_REGISTRATION);
+	rapidjson::StringBuffer buffer;
+	rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
+	document.Accept(writer);
+	const std::string& str = buffer.GetString();
 
-		/*
-		*Second step: accept answer from server, parse and trancfer to user.
-		*Answer from server prints to LogPrinter object.
-		*/
-		std::string doc = _sc.request(str);
-		rapidjson::Document new_doc;
-		new_doc.Parse(doc.c_str());
-		std::string buf;
-		std::string _type_ = new_doc["type"].GetString();
-		if (_type_ == "ok")
-		{
-			buf = "\"type\" : ";
-			buf += _type_;
-			LogPrinter::print(buf);
-		}
-		else
-		{
-			buf = "\"error\" : ";
-			buf = buf + new_doc["info"]["description"].GetString();
-			LogPrinter::print(buf);
-			throw (const char*)new_doc["info"]["description"].GetString();
-		}
+	/*
+	*Second step: accept answer from server, parse and trancfer to user.
+	*Answer from server prints to LogPrinter object.
+	*/
+	std::string doc = _sc.request(str);
+	rapidjson::Document new_doc;
+	new_doc.Parse(doc.c_str());
+	std::string buf;
+	std::string _type_ = new_doc["type"].GetString();
+	if (_type_ == "ok")
+	{
+		buf = "\"type\" : ";
+		buf += _type_;
+		LogPrinter::print(buf);
 	}
-	catch (const char *error) {
-		return ;
+	else
+	{
+		buf = "\"error\" : ";
+		buf = buf + new_doc["info"]["description"].GetString();
+		LogPrinter::print(buf);
+		throw (const char*)new_doc["info"]["description"].GetString();
 	}
 }
 
 void RequestFormer::to_enter(std::string& name, std::string& last_name,
 			       std::string& middle_name, std::string number, std::string password)
 {
-	try {
-		/*
-		*First step: accept full data from user, generate it to JSON request
-		*and send to the server.
-		*/
-		RequestFormer sx;
-		sx.enter_old_user(number, password);
-		rapidjson::Document document = sx.to_json(REQUEST_LOGIN);
-		rapidjson::StringBuffer buffer;
-		rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
-		document.Accept(writer);
-		const std::string& str = buffer.GetString();
 
-		/*
-		*Second step: accept answer from server, parse and trancfer to user.
-		*Answer from server prints to LogPrinter object.
-		*/
-		std::string doc = _sc.request(str);
-		rapidjson::Document new_doc;
-		new_doc.Parse(doc.c_str());
-		std::string buf;
-		std::string _type_ = new_doc["type"].GetString();
-		if (_type_ == "ok")
-		{
-			buf = "\"type\" : ";
-			buf = buf + _type_ + "\n\"info\" {\n\t";
-			name = new_doc["info"]["name"].GetString();
-			last_name = new_doc["info"]["last_name"].GetString();
-			middle_name = new_doc["info"]["middle_name"].GetString();
-			buf = buf + "\"name\" : " + name + "\n\t\"last_name\" : " + 
-				last_name + "\n\t\"middle_name\" : " + middle_name + "\n}";
-			LogPrinter::print(buf);
-		}
-		else
-		{
-			buf = "\"error\" : ";
-			buf = buf + new_doc["info"]["description"].GetString();
-			LogPrinter::print(buf);
-			throw (const char*)new_doc["info"]["description"].GetString();
-		}
+	/*
+	*First step: accept full data from user, generate it to JSON request
+	*and send to the server.
+	*/
+	RequestFormer sx;
+	sx.enter_old_user(number, password);
+	rapidjson::Document document = sx.to_json(REQUEST_LOGIN);
+	rapidjson::StringBuffer buffer;
+	rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
+	document.Accept(writer);
+	const std::string& str = buffer.GetString();
+
+	/*
+	*Second step: accept answer from server, parse and trancfer to user.
+	*Answer from server prints to LogPrinter object.
+	*/
+	std::string doc = _sc.request(str);
+	rapidjson::Document new_doc;
+	new_doc.Parse(doc.c_str());
+	std::string buf;
+	std::string _type_ = new_doc["type"].GetString();
+	if (_type_ == "ok")
+	{
+		buf = "\"type\" : ";
+		buf = buf + _type_ + "\n\"info\" {\n\t";
+		name = new_doc["info"]["name"].GetString();
+		last_name = new_doc["info"]["last_name"].GetString();
+		middle_name = new_doc["info"]["middle_name"].GetString();
+		buf = buf + "\"name\" : " + name + "\n\t\"last_name\" : " +
+			last_name + "\n\t\"middle_name\" : " + middle_name + "\n}";
+		LogPrinter::print(buf);
 	}
-	catch (const char *error) {
-		return ;
+	else
+	{
+		buf = "\"error\" : ";
+		buf = buf + new_doc["info"]["description"].GetString();
+		LogPrinter::print(buf);
+		throw (const char*)new_doc["info"]["description"].GetString();
 	}
 }
