@@ -1,5 +1,6 @@
 #include "LoginWindow.h"
 #include "ui_LoginWindow.h"
+#include "RequestFormer.h"
 #include "RegistrationWindow.h"
 #include <QMessageBox>
 #include <string>
@@ -35,7 +36,7 @@ void LoginWindow::on_Button_Login_clicked()
     std::string name, last_name, middle_name;
     try {
         RequestFormer::to_enter(name, last_name, middle_name, login, password);
-        sWindow = new ClientWindow(name, last_name, middle_name);
+        sWindow = new ClientWindow(0, name, last_name, middle_name);
         sWindow->show();
         this->close();
     }

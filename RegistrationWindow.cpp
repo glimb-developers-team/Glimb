@@ -30,6 +30,10 @@ void RegistrationWindow::on_pushButton_RegistrationTwo_clicked()
                                     ui->lineEdit_PhoneContractor->text().toUtf8().constData(),
                                     ui->radioButton_Client->text().toUtf8().constData()
                                     );
+         sWindow = new ClientWindow(0, ui->lineEdit_Name->text().toUtf8().constData(),  ui->lineEdit_LastName->text().toUtf8().constData(),
+                                    ui->lineEdit_MiddleName->text().toUtf8().constData());
+         sWindow->show();
+         this->close();
     }
     catch (char const *error) {
         QMessageBox::critical(this, "Внимание!", error);

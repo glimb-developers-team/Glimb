@@ -27,13 +27,19 @@ SOURCES += \
         main.cpp \
     LoginWindow.cpp \
     RegistrationWindow.cpp \
-    clientwindow.cpp
+    RequestFormer.cpp \
+    LogPrinter.cpp \
+    clientwindow.cpp \
+    ServerConnector.cpp
 
 
 HEADERS += \
     RegistrationWindow.h \
     LoginWindow.h \
-    clientwindow.h
+    clientwindow.h \
+    RequestWindow.h \
+    LogPrinter.h \
+    ServerConnector.h
 
 
 FORMS += \

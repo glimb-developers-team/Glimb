@@ -1,5 +1,6 @@
 #include "LoginWindow.h"
 #include <QApplication>
+#include "RequestFormer.h"
 
 int main(int argc, char *argv[])
 {
