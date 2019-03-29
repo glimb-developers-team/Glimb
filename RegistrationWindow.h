@@ -17,9 +17,9 @@ public:
     ~RegistrationWindow();
 
 private slots:
+
     void on_pushButton_RegistrationTwo_clicked();
 
-    void on_radioButton_Contractor_clicked(bool checked);
 
 private:
     ClientWindow *sWindow;

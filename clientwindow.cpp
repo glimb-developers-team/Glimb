@@ -1,4 +1,4 @@
-#include "ClientWindow.h"
+#include "clientwindow.h"
 #include "ui_ClientWindow.h"
 
 ClientWindow::ClientWindow(QWidget *parent, std::string name, std::string last_name, std::string middle_name) :

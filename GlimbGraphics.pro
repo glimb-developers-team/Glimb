@@ -37,7 +37,7 @@ HEADERS += \
     RegistrationWindow.h \
     LoginWindow.h \
     clientwindow.h \
-    RequestWindow.h \
+    RequestFormer.h \
     LogPrinter.h \
     ServerConnector.h
 
