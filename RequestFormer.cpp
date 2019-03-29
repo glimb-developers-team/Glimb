@@ -126,13 +126,15 @@ void RequestFormer::serialize(Writer& writer) const
 	#endif
 }
 
-std::string RequestFormer::to_register(std::string name, std::string last_name,
+void RequestFormer::to_register(std::string name, std::string last_name,
 			       std::string middle_name, std::string number, std::string password,
 			       std::string type, std::string foreman_number)
 {
 	try {
-		/*First step: accept full data from new user, generate it to JSON request
-		*and send to the server.*/
+		/*
+		*First step: accept full data from user, generate it to JSON request
+		*and send to the server.
+		*/
 		RequestFormer sx;
 		if (type == "foreman")
 			foreman_number = "NULL";
@@ -143,7 +145,10 @@ std::string RequestFormer::to_register(std::string name, std::string last_name,
 		document.Accept(writer);
 		const std::string& str = buffer.GetString();
 
-		/*Second step: accept answer from server, parse and trancfer to user.*/
+		/*
+		*Second step: accept answer from server, parse and trancfer to user.
+		*Answer from server prints to LogPrinter object.
+		*/
 		std::string doc = _sc.request(str);
 		rapidjson::Document new_doc;
 		new_doc.Parse(doc.c_str());
@@ -151,9 +156,9 @@ std::string RequestFormer::to_register(std::string name, std::string last_name,
 		std::string _type_ = new_doc["type"].GetString();
 		if (_type_ == "ok")
 		{
-			buf = name + last_name + middle_name;
+			buf = "\"type\" : ";
+			buf += _type_;
 			LogPrinter::print(buf);
-			return buf;
 		}
 		else
 		{
@@ -164,15 +169,18 @@ std::string RequestFormer::to_register(std::string name, std::string last_name,
 		}
 	}
 	catch (const char *error) {
-		return error;
+		return ;
 	}
 }
 
-std::string RequestFormer::to_enter(std::string number, std::string password)
+void RequestFormer::to_enter(std::string& name, std::string& last_name,
+			       std::string& middle_name, std::string number, std::string password)
 {
 	try {
-		/*First step: accept full data from user, generate it to JSON request
-		*and send to the server.*/
+		/*
+		*First step: accept full data from user, generate it to JSON request
+		*and send to the server.
+		*/
 		RequestFormer sx;
 		sx.enter_old_user(number, password);
 		rapidjson::Document document = sx.to_json(REQUEST_LOGIN);
@@ -181,7 +189,10 @@ std::string RequestFormer::to_enter(std::string number, std::string password)
 		document.Accept(writer);
 		const std::string& str = buffer.GetString();
 
-		/*Second step: accept answer from server, parse and trancfer to user.*/
+		/*
+		*Second step: accept answer from server, parse and trancfer to user.
+		*Answer from server prints to LogPrinter object.
+		*/
 		std::string doc = _sc.request(str);
 		rapidjson::Document new_doc;
 		new_doc.Parse(doc.c_str());
@@ -189,11 +200,14 @@ std::string RequestFormer::to_enter(std::string number, std::string password)
 		std::string _type_ = new_doc["type"].GetString();
 		if (_type_ == "ok")
 		{
-			buf = new_doc["info"]["name"].GetString();
-      buf += new_doc["info"]["last_name"].GetString();
-      buf += new_doc["info"]["middle_name"].GetString();
+			buf = "\"type\" : ";
+			buf = buf + _type_ + "\n\"info\" {\n\t";
+			name = new_doc["info"]["name"].GetString();
+			last_name = new_doc["info"]["last_name"].GetString();
+			middle_name = new_doc["info"]["middle_name"].GetString();
+			buf = buf + "\"name\" : " + name + "\n\t\"last_name\" : " + 
+				last_name + "\n\t\"middle_name\" : " + middle_name + "\n}";
 			LogPrinter::print(buf);
-			return buf;
 		}
 		else
 		{
@@ -204,6 +218,6 @@ std::string RequestFormer::to_enter(std::string number, std::string password)
 		}
 	}
 	catch (const char *error) {
-		return error;
+		return ;
 	}
 }

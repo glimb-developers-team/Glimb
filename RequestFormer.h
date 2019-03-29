@@ -55,29 +55,36 @@ public:
 
 	~RequestFormer();
 
+	/*
+	*This method calls ServerConnector object to connect to server by static method.
+	*/
 	static void connect_to_server();
 
+	/*
+	*This method closes connection by static method of ServerConnector class.
+	*/
 	static void disconnect();
 
 	/*
 	*to_register() - register a new user's account.
 	*It's first function which you need.
-	*Method returns "1", if user exists and his data is right.
-	*Else method returns error tied with server or user.
-	*Can throw "Such user already exists", "Password is too short" or
+	*The method returns nothing.
+	*If such user has not already existed with the same data,
+	*can throw "Such user already exists", "Password is too short" or
 	*"Number of foreman is not right" of type const char *.
 	*/
-	static std::string to_register(std::string name, std::string last_name, std::string middle_name,
+	static void to_register(std::string name, std::string last_name, std::string middle_name,
 		std::string number, std::string password, std::string type,
 		std::string foreman_number);
 
 	/*
 	*to_enter() - enter to user's account. It's second function which you need.
-	*Method returns "1", if user exists and his data is right.
-	*Else method returns error tied with server or user.
-	*Can throw "User does not exist" or "Password is failed" of type const char *.
+	*The method returns nothing.
+	*If such user exists and his password is right,
+	*can throw "User does not exist" or "Password is failed" of type const char *.
 	*/
-	static std::string to_enter(std::string number, std::string password);
+	static void to_enter(std::string& name, std::string& last_name,
+				       std::string& middle_name, std::string number, std::string password);
 
 };
 
