@@ -10,19 +10,23 @@ LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::LoginWindow)
 {
-     try {
+     ui->setupUi(this);
+     /*try
+    {
          RequestFormer::connect_to_server();
-     }
-     catch (char const *error) {
+    }
+     catch (char const *error)
+    {
 
         QMessageBox::critical(this, "Внимание!", error);
-    }
-    ui->setupUi(this);
+    }*/
 }
 
 LoginWindow::~LoginWindow()
 {
+    RequestFormer::disconnect();
     delete ui;
+
 }
 
 void LoginWindow::on_Button_Login_clicked()

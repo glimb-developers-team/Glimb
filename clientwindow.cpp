@@ -9,7 +9,11 @@ ClientWindow::ClientWindow(QWidget *parent, std::string name, std::string last_n
     middle_name(middle_name)
 
 {
+
     ui->setupUi(this);
+    std::string FIO = name;
+    last_name + middle_name;
+    ui->label_FIO->setText(FIO.c_str());
 }
 
 ClientWindow::~ClientWindow()

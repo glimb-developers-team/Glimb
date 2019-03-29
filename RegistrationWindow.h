@@ -18,8 +18,7 @@ public:
 
 private slots:
 
-    void on_pushButton_RegistrationTwo_clicked();
-
+    void on_Button_RegistrationTwo_clicked();
 
 private:
     ClientWindow *sWindow;

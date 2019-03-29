@@ -8,6 +8,5 @@ int main(int argc, char *argv[])
     LoginWindow w;
     w.show();
 
-    RequestFormer::disconnect();
     return a.exec();
 }
