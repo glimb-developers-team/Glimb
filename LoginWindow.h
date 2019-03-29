@@ -20,9 +20,10 @@ public:
 
 
 private slots:
-    void on_pushButton_Registration_clicked();
 
-    void on_pushButton_Login_clicked();
+    void on_Button_Login_clicked();
+
+    void on_Button_Registration_clicked();
 
 private:
     ClientWindow *sWindow;

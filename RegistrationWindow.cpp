@@ -20,9 +20,10 @@ RegistrationWindow::~RegistrationWindow()
     delete ui;
 }
 
-void RegistrationWindow::on_pushButton_clicked()
+void RegistrationWindow::on_pushButton_RegistrationTwo_clicked()
 {
-    std::string answer;
+
+    /*std::string answer;
     try {
         answer = former.to_register(ui->lineEdit_Name->text().toUtf8().constData(),
                                     ui->lineEdit_LastName->text().toUtf8().constData(),
@@ -43,6 +44,6 @@ void RegistrationWindow::on_pushButton_clicked()
     }
     catch (char const *error) {
         QMessageBox::critical(this, "Внимание!", error);
-    }
+    }*/
 
 }

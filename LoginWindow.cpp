@@ -18,36 +18,13 @@ LoginWindow::~LoginWindow()
     delete ui;
 }
 
-
-void LoginWindow::on_pushButton_Login_clicked()
+void LoginWindow::on_Button_Login_clicked()
 {
-    
-    std::string login;
-    login = ui->lineEdit_Login->text().toUtf8().constData();
-    
-    std::string password;
-    password = ui -> lineEdit_Password->text().toUtf8().constData();
-
-    std::string answer;
-
-    try {
-        answer = former.to_enter(login, password);
-
-        if (answer == "ok"){
-            sWindow ->show();
-            this->close();
-        }
-        else {
-            QMessageBox::critical(this, "Внимание!", answer.c_str());
-        }
-    }
-    catch (char const *error) {
-
-        QMessageBox::critical(this, "Внимание!", error);
-    }
+    sWindow ->show();
+    this->close();
 }
 
-void LoginWindow::on_pushButton_Registration_clicked()
+void LoginWindow::on_Button_Registration_clicked()
 {
     RegistrationWindow window;
     window.setModal(true);

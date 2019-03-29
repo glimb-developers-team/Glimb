@@ -16,7 +16,7 @@ public:
     ~RegistrationWindow();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_pushButton_RegistrationTwo_clicked();
 
 private:
     Ui::RegistrationWindow *ui;

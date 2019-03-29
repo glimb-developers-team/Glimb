@@ -80,6 +80,9 @@
      </item>
      <item row="7" column="1">
       <widget class="QRadioButton" name="radioButton_Contractor">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="text">
         <string>Я исполнитель</string>
        </property>
