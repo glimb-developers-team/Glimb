@@ -5,7 +5,7 @@
 * Date: 14.03.19
 */
 
-#define ADRESS "192.168.43.33"
+#define ADDRESS "192.168.43.33"
 #define PORT 4512
 
 #include "RequestFormer.h"
