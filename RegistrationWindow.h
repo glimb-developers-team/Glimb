@@ -1,7 +1,7 @@
 #ifndef REGISTRATION_H
 #define REGISTRATION_H
 
-#include "clientwindow.h"
+#include "ClientWindow.h"
 #include <QDialog>
 
 namespace Ui {

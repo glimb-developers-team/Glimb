@@ -11,7 +11,7 @@ LoginWindow::LoginWindow(QWidget *parent) :
     ui(new Ui::LoginWindow)
 {
      ui->setupUi(this);
-     /*try
+     try
     {
          RequestFormer::connect_to_server();
     }
@@ -19,7 +19,7 @@ LoginWindow::LoginWindow(QWidget *parent) :
     {
 
         QMessageBox::critical(this, "Внимание!", error);
-    }*/
+    }
 }
 
 LoginWindow::~LoginWindow()
