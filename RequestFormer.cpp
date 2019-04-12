@@ -5,7 +5,7 @@
 * Date: 14.03.19
 */
 
-#define ADDRESS "192.168.43.33"
+#define ADDRESS "77.51.199.31"
 #define PORT 4512
 
 #include "RequestFormer.h"
@@ -226,6 +226,7 @@ std::queue <Material> RequestFormer::to_get_materials()
 	document.SetObject();
 	document.AddMember("request", REQUEST_GET_MATERIALS, allocator);
 	info_val.SetObject();
+	document.AddMember("info", info_val, allocator);
 	rapidjson::StringBuffer str_buf;
 	rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(str_buf);
 	document.Accept(writer);
@@ -244,9 +245,9 @@ std::queue <Material> RequestFormer::to_get_materials()
 	*/
 	std::queue <Material> mtr;
 	if (_type_ == "ok") {
-		while (!new_document.HasMember("description")) {
+		while (!new_document["info"].HasMember("description")) {
 			const rapidjson::Value& materials = new_document["info"]["materials"];
-			assert(materials.IsArray());
+			//assert(materials.IsArray());
 			for (rapidjson::Value::ConstValueIterator itr = materials.Begin(); itr != materials.End(); ++itr) {
 				Material X;			
 				rapidjson::Value::ConstMemberIterator currentElement = itr->FindMember("title");
@@ -257,7 +258,7 @@ std::queue <Material> RequestFormer::to_get_materials()
 				X.price = std::stod(currentElement->value.GetString());;
 				mtr.push(X);
 			}
-			answer = get_next_answer();
+			answer = _sc.get_next_answer();
 			new_document.Parse(answer.c_str());
 		}
 		return mtr;
