@@ -70,6 +70,7 @@ std::string ServerConnector::request(std::string request)
 	if (_connected == false) {
 		throw "No connection to the server";
 	}
+
 	/* Initialization */
 	char buffer[BUFFER_SIZE];
 	int result;
@@ -84,7 +85,26 @@ std::string ServerConnector::request(std::string request)
 	/* Receiving answer form the server */
 	result = recv(_sockfd, buffer, BUFFER_SIZE, 0);
 	if (result <= 0) {
-		throw "Failed to receive answer from server";
+		throw "Failed to receive answer from the server";
+	}
+
+	return buffer;
+}
+
+std::string ServerConnector::get_next_answer()
+{
+	if (_connected == false) {
+		throw "No connection to the server";
+	}
+
+	/* Initialization */
+	char buffer[BUFFER_SIZE];
+	int result;
+
+	/* Receiving answer from the server */
+	result = recv(_sockfd, buffer, BUFFER_SIZE, 0);
+	if (result <= 0) {
+		throw "Failed to receive answer from the server";
 	}
 
 	return buffer;

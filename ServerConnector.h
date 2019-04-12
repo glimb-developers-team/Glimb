@@ -48,6 +48,13 @@ public:
 	* "Failed to receive answer from the server" of type const char *.
 	*/
 	std::string request(std::string request);
+
+	/*
+	* get_next_answer() - calls recv() function to get next answer from server.
+	* Uses when request can return more than one answer (ex. REQUEST_GET_MATERIALS).
+	* Can throw "No connection to the server", "Failed to receive answer from the server" of type const char*.
+	*/
+	std::string get_next_answer();
 };
 
 #endif // SERVER_CONNECTOR_H
