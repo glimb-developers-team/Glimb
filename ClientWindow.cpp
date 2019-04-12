@@ -1,5 +1,5 @@
 #include "ClientWindow.h"
-#include "ui_ClientWindow.h"
+#include "ui_clientwindow.h"
 
 ClientWindow::ClientWindow(QWidget *parent, std::string name, std::string last_name, std::string middle_name) :
     ui(new Ui::ClientWindow),
@@ -19,4 +19,11 @@ ClientWindow::ClientWindow(QWidget *parent, std::string name, std::string last_n
 ClientWindow::~ClientWindow()
 {
     delete ui;
+}
+
+void ClientWindow::on_but_clicked()
+{
+    oWindow = new OrderWindow();
+    oWindow->show();
+    this->close();
 }

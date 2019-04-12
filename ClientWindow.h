@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <string>
+#include <orderwindow.h>
 
 namespace Ui {
 class ClientWindow;
@@ -17,9 +18,13 @@ public:
     ~ClientWindow();
 
 private slots:
-    void on_pushButton_clicked();
+
+
+
+    void on_but_clicked();
 
 private:
+    OrderWindow *oWindow;
     Ui::ClientWindow *ui;
     std::string name;
     std::string last_name;

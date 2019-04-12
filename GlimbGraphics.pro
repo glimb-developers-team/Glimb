@@ -48,4 +48,4 @@ FORMS += \
     LoginWindow.ui \
     RegistrationWindow.ui \
     orderwindow.ui \
-    ClientWindow.ui
+    clientwindow.ui
