@@ -1,5 +1,7 @@
 #include "orderwindow.h"
 #include "ui_orderwindow.h"
+#include "RequestFormer.h"
+#include <queue>
 
 OrderWindow::OrderWindow(QWidget *parent) :
     QWidget(parent),
@@ -7,12 +9,21 @@ OrderWindow::OrderWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->tableWidget->setRowCount(10);
-    ui->tableWidget->setColumnCount(4);
-    ui->tableWidget->setHorizontalHeaderLabels(QStringList()<<"Артикул"<<"Наименование"<<"Цена"<<"Количество");
+    ui->tableWidget->setColumnCount(3);
+    ui->tableWidget->setHorizontalHeaderLabels(QStringList()<<"Наименование"<<"Цена"<<"Количество");
 
+    std::queue<Material> q = RequestFormer::to_get_materials();
+    Material mat;
+    char price_buf[8];
 
-    ui->tableWidget->setItem(0,0, new QTableWidgetItem("jfnkjnnksnkjs"));
-
+    for (int i = 0; !q.empty(); i++) {
+            mat = q.front();
+            ui->tableWidget->setItem(i, 0, new QTableWidgetItem(mat.title.c_str()));
+            ui->tableWidget->setItem(i, 1, new QTableWidgetItem(mat.unions.c_str()));
+            sprintf(price_buf, "%f", mat.price);
+            ui->tableWidget->setItem(i, 2, new QTableWidgetItem(price_buf));
+            q.pop();
+    }
 }
 
 OrderWindow::~OrderWindow()
