@@ -32,7 +32,7 @@ RequestFormer::~RequestFormer()
 
 void RequestFormer::connect_to_server()
 {
-    _sc.to_connect(ADRESS, PORT);
+    _sc.to_connect(ADDRESS, PORT);
 }
 
 void RequestFormer::disconnect()
@@ -211,4 +211,58 @@ void RequestFormer::to_enter(std::string& name, std::string& last_name,
 		LogPrinter::print(buf);
 		throw (const char*)new_doc["info"]["description"].GetString();
 	}
+}
+
+std::queue <Material> RequestFormer::to_get_materials() 
+{
+
+	/*
+	*First step: generate request to JSON format.
+	*Request reports server that user want to get all materials.
+	*/
+	rapidjson::Value info_val;
+	rapidjson::Document document;
+	rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+	document.SetObject();
+	document.AddMember("request", REQUEST_GET_MATERIALS, allocator);
+	info_val.SetObject();
+	rapidjson::StringBuffer str_buf;
+	rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(str_buf);
+	document.Accept(writer);
+	const std::string& str = str_buf.GetString();
+
+	/*
+	*Second step: send request to server, accept answer and parse it.
+	*/
+	std::string answer = _sc.request(str);
+	rapidjson::Document new_document;
+	new_document.Parse(answer.c_str());
+	std::string _type_ = new_document["type"].GetString();
+
+	/*
+	*Third step: submit data in suitable format and send it to user.
+	*/
+	std::queue <Material> mtr;
+	if (_type_ == "ok") {
+		while (!new_document.HasMember("description")) {
+			const rapidjson::Value& materials = new_document["info"]["materials"];
+			assert(materials.IsArray());
+			for (rapidjson::Value::ConstValueIterator itr = materials.Begin(); itr != materials.End(); ++itr) {
+				Material X;			
+				rapidjson::Value::ConstMemberIterator currentElement = itr->FindMember("title");
+				X.title = currentElement->value.GetString();;
+				currentElement = itr->FindMember("unions");
+				X.unions = currentElement->value.GetString();;
+				currentElement = itr->FindMember("price");
+				X.price = std::stod(currentElement->value.GetString());;
+				mtr.push(X);
+			}
+			answer = get_next_answer();
+			new_document.Parse(answer.c_str());
+		}
+		return mtr;
+	}
+	else
+		throw (const char*)new_document["info"]["description"].GetString();
+		
 }

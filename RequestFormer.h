@@ -9,10 +9,17 @@
 #define REQUEST_FORMER_H
 
 #include "rapidjson/document.h"
-#include <string>
 #include "rapidjson/writer.h"
+#include <string>
+#include <queue>
 #include "ServerConnector.h"
 #include "LogPrinter.h"
+
+struct Material {
+    std::string title;
+    std::string unions;
+    double price;
+};
 
 class RequestFormer {
 private:
@@ -67,9 +74,8 @@ public:
 
 	/*
 	*to_register() - register a new user's account.
-	*It's first function which you need.
 	*The method returns nothing.
-	*If such user has not already existed with the same data,
+	*If such user has already existed or some data is not in suitable format,
 	*can throw "Such user already exists", "Password is too short" or
 	*"Number of foreman is not right" of type const char *.
 	*/
@@ -78,13 +84,18 @@ public:
 		std::string foreman_number);
 
 	/*
-	*to_enter() - enter to user's account. It's second function which you need.
-	*The method returns nothing.
-	*If such user exists and his password is right,
+	*to_enter() - enter to user's account. The method returns nothing.
+	*If such user exists or his password is wrong,
 	*can throw "User does not exist" or "Password is failed" of type const char *.
 	*/
 	static void to_enter(std::string& name, std::string& last_name,
 				       std::string& middle_name, std::string number, std::string password);
+
+	/*
+	*to_get_materials() - create JSON request to server, receive answer, parse it and return the queue of materials.
+	*Else it can throw that such objects do not exist.
+	*/
+	static std::queue <Material> to_get_materials();
 
 };
 
