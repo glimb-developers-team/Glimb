@@ -29,20 +29,23 @@ SOURCES += \
     RegistrationWindow.cpp \
     RequestFormer.cpp \
     LogPrinter.cpp \
-    clientwindow.cpp \
-    ServerConnector.cpp
+    ServerConnector.cpp \
+    orderwindow.cpp \
+    ClientWindow.cpp
 
 
 HEADERS += \
     RegistrationWindow.h \
     LoginWindow.h \
-    clientwindow.h \
     RequestFormer.h \
     LogPrinter.h \
-    ServerConnector.h
+    ServerConnector.h \
+    orderwindow.h \
+    ClientWindow.h
 
 
 FORMS += \
     LoginWindow.ui \
     RegistrationWindow.ui \
-    clientwindow.ui
+    orderwindow.ui \
+    ClientWindow.ui

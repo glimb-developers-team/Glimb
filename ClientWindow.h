@@ -16,6 +16,9 @@ public:
     explicit ClientWindow(QWidget *parent = 0, std::string name = "", std::string last_name = "", std::string middle_name = "");
     ~ClientWindow();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::ClientWindow *ui;
     std::string name;
