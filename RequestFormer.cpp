@@ -15,6 +15,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <cstdio>
+#include <cstdlib>
 #include "ServerConnector.h"
 #include "LogPrinter.h"
 
@@ -213,7 +214,7 @@ void RequestFormer::to_enter(std::string& name, std::string& last_name,
 	}
 }
 
-std::queue <Material> RequestFormer::to_get_materials() 
+std::queue <Material> RequestFormer::to_get_materials()
 {
 
 	/*
@@ -246,16 +247,18 @@ std::queue <Material> RequestFormer::to_get_materials()
 	std::queue <Material> mtr;
 	if (_type_ == "ok") {
 		while (!new_document["info"].HasMember("description")) {
+                        LogPrinter::print(answer);
 			const rapidjson::Value& materials = new_document["info"]["materials"];
 			//assert(materials.IsArray());
 			for (rapidjson::Value::ConstValueIterator itr = materials.Begin(); itr != materials.End(); ++itr) {
-				Material X;			
+				Material X;
 				rapidjson::Value::ConstMemberIterator currentElement = itr->FindMember("title");
 				X.title = currentElement->value.GetString();;
 				currentElement = itr->FindMember("unions");
-				X.unions = currentElement->value.GetString();;
+				X.unions = currentElement->value.GetString();
 				currentElement = itr->FindMember("price");
-				X.price = std::stod(currentElement->value.GetString());;
+				X.price = currentElement->value.GetDouble();
+                                std::cout << "Getted " << X.price << " : " << currentElement->value.GetDouble() << std::endl;
 				mtr.push(X);
 			}
 			answer = _sc.get_next_answer();
@@ -265,5 +268,5 @@ std::queue <Material> RequestFormer::to_get_materials()
 	}
 	else
 		throw (const char*)new_document["info"]["description"].GetString();
-		
+
 }
