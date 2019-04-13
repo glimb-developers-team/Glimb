@@ -15,6 +15,10 @@ public:
     explicit OrderWindow(QWidget *parent = 0);
     ~OrderWindow();
 
+private slots:
+
+    void on_searchButton_clicked();
+
 private:
     Ui::OrderWindow *ui;
 };

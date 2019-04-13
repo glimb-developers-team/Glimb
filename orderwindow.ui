@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>661</width>
-    <height>438</height>
+    <width>662</width>
+    <height>449</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,28 +17,42 @@
    <property name="geometry">
     <rect>
      <x>5</x>
-     <y>51</y>
-     <width>651</width>
-     <height>391</height>
+     <y>10</y>
+     <width>661</width>
+     <height>431</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" colspan="2">
-     <widget class="QTableWidget" name="tableWidget"/>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QLineEdit" name="searchLine"/>
     </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton">
+    <item row="0" column="1">
+     <widget class="QPushButton" name="searchButton">
       <property name="text">
-       <string>PushButton</string>
+       <string>Поиск</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="text">
-       <string>PushButton</string>
-      </property>
-     </widget>
+    <item row="1" column="0" colspan="2">
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="1" column="0">
+       <widget class="QPushButton" name="cancelButton">
+        <property name="text">
+         <string>Отменить</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="orderButton">
+        <property name="text">
+         <string>Оформить закупку</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QTableWidget" name="tableWidget"/>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
