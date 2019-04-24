@@ -5,8 +5,6 @@
 * Date: 09.03.19
 */
 
-#define BUFFER_SIZE 512
-
 /*
 * This file defines methods of class ServerConnector, which is described in ServerConnector.h
 * See all methods description in the header file.
@@ -89,6 +87,24 @@ std::string ServerConnector::request(std::string request)
 	}
 
 	return buffer;
+}
+
+void ServerConnector::simple_request(std::string request)
+{
+	if (_connected == false) {
+		throw "No connection to the server";
+	}
+
+	/* Initialization */
+	char buffer[BUFFER_SIZE];
+	int result;
+
+	/* Sending request to the server */
+	snprintf(buffer, BUFFER_SIZE, "%s", request.c_str());
+	result = send(_sockfd, buffer, BUFFER_SIZE, 0);
+	if (result < 0) {
+		throw "Failed to send request to the server";
+	}
 }
 
 std::string ServerConnector::get_next_answer()

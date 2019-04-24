@@ -13,6 +13,8 @@
 * which helps to connect and send requests to the server.
 */
 
+#define BUFFER_SIZE 512
+
 #include <string>
 
 class ServerConnector {
@@ -48,6 +50,13 @@ public:
 	* "Failed to receive answer from the server" of type const char *.
 	*/
 	std::string request(std::string request);
+
+	/*
+	* simple_request() - sends a request to the server and doesn't waiting for answer.
+	* Uses when request can be divided into several parts.
+	* Can throw "No connection to the server", "Failed to send request to the server".
+	*/
+	void simple_request(std::string request);
 
 	/*
 	* get_next_answer() - calls recv() function to get next answer from server.
