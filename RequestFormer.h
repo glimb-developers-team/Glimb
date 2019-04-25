@@ -93,8 +93,10 @@ public:
 	*If such user exists or his password is wrong,
 	*can throw "User does not exist" or "Password is failed" of type const char *.
 	*/
-	static void to_enter(std::string& name, std::string& last_name,
-				       std::string& middle_name, std::string number, std::string password, std::string type);
+	static void to_enter(std::string number, std::string password, 
+					std::string& name, std::string& last_name,
+					std::string& middle_name, std::string& type,
+					std::queue <std::string> clients_numbers);
 
 	/*
 	*to_get_materials() - create JSON request to server, receive answer, parse it and return the queue of materials.

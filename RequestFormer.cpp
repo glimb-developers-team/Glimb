@@ -156,11 +156,11 @@ void RequestFormer::to_register(std::string name, std::string last_name,
 	*Second step: accept answer from server, parse and trancfer to user.
 	*Answer from server prints to LogPrinter object.
 	*/
-	std::string doc = _sc.request(str);
-	rapidjson::Document new_doc;
-	new_doc.Parse(doc.c_str());
+	std::string answer = _sc.request(str);
+	rapidjson::Document new_document;
+	new_document.Parse(answer.c_str());
 	std::string buf;
-	std::string _type_ = new_doc["type"].GetString();
+	std::string _type_ = new_document["type"].GetString();
 	if (_type_ == "ok")
 	{
 		buf = "\"type\" : ";
@@ -170,15 +170,16 @@ void RequestFormer::to_register(std::string name, std::string last_name,
 	else
 	{
 		buf = "\"error\" : ";
-		buf = buf + new_doc["info"]["description"].GetString();
+		buf = buf + new_document["info"]["description"].GetString();
 		LogPrinter::print(buf);
-		throw (const char*)new_doc["info"]["description"].GetString();
+		throw (const char*)new_document["info"]["description"].GetString();
 	}
 }
 
-void RequestFormer::to_enter(std::string& name, std::string& last_name,
-				std::string& middle_name, std::string number, 
-				std::string password, std::string type)
+void RequestFormer::to_enter(std::string number, std::string password, 
+				std::string& name, std::string& last_name,
+				std::string& middle_name, std::string& type, 
+				std::queue <std::string> clients_numbers)
 {
 
 	/*
@@ -197,28 +198,41 @@ void RequestFormer::to_enter(std::string& name, std::string& last_name,
 	*Second step: accept answer from server, parse and trancfer to user.
 	*Answer from server prints to LogPrinter object.
 	*/
-	std::string doc = _sc.request(str);
-	rapidjson::Document new_doc;
-	new_doc.Parse(doc.c_str());
+	std::string answer = _sc.request(str);
+	rapidjson::Document new_document;
+	new_document.Parse(answer.c_str());
 	std::string buf;
-	std::string _type_ = new_doc["type"].GetString();
+	std::string _type_ = new_document["type"].GetString();
 	if (_type_ == "ok")
 	{
 		buf = "\"type\" : ";
 		buf = buf + _type_ + "\n\"info\" {\n\t";
-		name = new_doc["info"]["name"].GetString();
-		last_name = new_doc["info"]["last_name"].GetString();
-		middle_name = new_doc["info"]["middle_name"].GetString();
-		buf = buf + "\"name\" : " + name + "\n\t\"last_name\" : " +
-			last_name + "\n\t\"middle_name\" : " + middle_name + "\n}";
-		LogPrinter::print(buf);
+		name = new_document["info"]["name"].GetString();
+		last_name = new_document["info"]["last_name"].GetString();
+		middle_name = new_document["info"]["middle_name"].GetString();
+		type = new_document["info"]["type"].GetString();
+		buf = buf + "\"name\" : " + name + "\n\t\"last_name\" : " + last_name 
+				+ "\n\t\"middle_name\" : " + middle_name + "\n\t\"type\" : " + type;
+		if (new_document["info"].HasMember("clients_numbers")) 
+		{
+			buf = buf + "\n\t\"clients_numbers\" : [\n";
+			const rapidjson::Value& clients = new_document["info"]["clients_numbers"];
+			for (rapidjson::Value::ConstValueIterator itr = clients.Begin(); itr != clients.End(); ++itr) 
+			{
+				std::string tmp = itr->GetString();
+				clients_numbers.push(tmp);
+				buf = buf + "\t\t" + tmp + "\n";				
+			}
+		}
+		buf += "}";
+		LogPrinter::print(answer);
 	}
 	else
 	{
 		buf = "\"error\" : ";
-		buf = buf + new_doc["info"]["description"].GetString();
+		buf = buf + new_document["info"]["description"].GetString();
 		LogPrinter::print(buf);
-		throw (const char*)new_doc["info"]["description"].GetString();
+		throw (const char*)new_document["info"]["description"].GetString();
 	}
 }
 
@@ -256,15 +270,14 @@ std::queue <Material> RequestFormer::to_get_materials()
 			const rapidjson::Value& materials = new_document["info"]["materials"];
 			for (rapidjson::Value::ConstValueIterator itr = materials.Begin(); itr != materials.End(); ++itr) 
 			{
-				Material X;
+				Material tmp;
 				rapidjson::Value::ConstMemberIterator currentElement = itr->FindMember("title");
-				X.title = currentElement->value.GetString();;
+				tmp.title = currentElement->value.GetString();
 				currentElement = itr->FindMember("unions");
-				X.unions = currentElement->value.GetString();
+				tmp.unions = currentElement->value.GetString();
 				currentElement = itr->FindMember("price");
-				X.price = currentElement->value.GetDouble();
-                                std::cout << "Getted " << X.price << " : " << currentElement->value.GetDouble() << std::endl;
-				mtr.push(X);
+				tmp.price = currentElement->value.GetDouble();
+				mtr.push(tmp);
 			}
 			answer = _sc.get_next_answer();
 			new_document.Parse(answer.c_str());
