@@ -3,6 +3,7 @@
 #include "RequestFormer.h"
 #include <queue>
 #include <iostream>
+#include <queue>
 using namespace std;
 
 OrderWindow::OrderWindow(QWidget *parent) :
@@ -11,8 +12,8 @@ OrderWindow::OrderWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->tableWidget->setRowCount(10);
-    ui->tableWidget->setColumnCount(3);
-    ui->tableWidget->setHorizontalHeaderLabels(QStringList()<<"Наименование"<<"Единицы измерения"<<"Цена");
+    ui->tableWidget->setColumnCount(4);
+    ui->tableWidget->setHorizontalHeaderLabels(QStringList()<<"Наименование"<<"Единицы измерения"<<"Цена"<<"Кол-во");
 
     std::queue<Material> q = RequestFormer::to_get_materials();
     Material mat;
@@ -38,8 +39,6 @@ void OrderWindow::on_searchButton_clicked()
 {
     int k[10];
     memset(k,0,10*sizeof(int));
-    int index = 0;
-    int f = 0;
     QString search = ui->searchLine->text();
     string srch = search.toUtf8().constData();
     char charSearch[30];
@@ -85,4 +84,19 @@ void OrderWindow::on_searchButton_clicked()
         ui->tableWidget->selectRow(maxindex);
     }
 
+}
+
+void OrderWindow::on_orderButton_clicked()
+{
+    queue <Purchase> orderList;
+
+    for (int i = 0; i < ui->tableWidget->rowCount();i++)
+        if (ui->tableWidget->item(i,4) != 0)
+        {
+            Purchase row;
+            row.title = ui->tableWidget->item(i,0)->text().toUtf8().constData();
+            row.quantity = ui->tableWidget->item(i,4)->text().toInt();
+            orderList.push(row);
+        }
+    RequestFormer::to_send_purchase("89165205824","1234",orderList);
 }

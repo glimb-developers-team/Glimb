@@ -19,6 +19,8 @@ private slots:
 
     void on_searchButton_clicked();
 
+    void on_orderButton_clicked();
+
 private:
     Ui::OrderWindow *ui;
 };
