@@ -16,9 +16,14 @@
 #include "LogPrinter.h"
 
 struct Material {
-    std::string title;
-    std::string unions;
-    double price;
+	std::string title;
+	std::string unions;
+	double price;
+};
+
+struct Purchase {
+	std::string title;
+	int quantity;
 };
 
 class RequestFormer {
@@ -89,13 +94,18 @@ public:
 	*can throw "User does not exist" or "Password is failed" of type const char *.
 	*/
 	static void to_enter(std::string& name, std::string& last_name,
-				       std::string& middle_name, std::string number, std::string password);
+				       std::string& middle_name, std::string number, std::string password, std::string type);
 
 	/*
 	*to_get_materials() - create JSON request to server, receive answer, parse it and return the queue of materials.
 	*Else it can throw that such objects do not exist.
 	*/
 	static std::queue <Material> to_get_materials();
+
+	/*
+	*to_send_materials() - create JSON file from purchase and send it to server.
+	*/
+	static void to_send_purchase(std::string foreman_number, std::string client_number, std::queue <Purchase> table);
 
 };
 
