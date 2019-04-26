@@ -5,7 +5,7 @@
 * Date: 14.03.19
 */
 
-#define ADDRESS "192.168.43.33"
+#define ADDRESS "77.51.199.31"
 #define PORT 4512
 
 #define MATERIAL_SYM_LENGTH 128
@@ -104,7 +104,7 @@ rapidjson::Document RequestFormer::to_json(std::string request)
 	}
 	else if (request == REQUEST_GET_MATERIALS) {
 		document.SetObject();
-		document.AddMember("request", REQUEST_LOGIN, allocator);
+		document.AddMember("request", REQUEST_GET_MATERIALS, allocator);
 		info_val.SetObject();
 		document.AddMember("info", info_val, allocator);
 	}
@@ -176,9 +176,9 @@ void RequestFormer::to_register(std::string name, std::string last_name,
 	}
 }
 
-void RequestFormer::to_enter(std::string number, std::string password, 
+void RequestFormer::to_enter(std::string number, std::string password,
 				std::string& name, std::string& last_name,
-				std::string& middle_name, std::string& type, 
+				std::string& middle_name, std::string& type,
 				std::queue <std::string>& clients_numbers)
 {
 
@@ -210,18 +210,18 @@ void RequestFormer::to_enter(std::string number, std::string password,
 		name = new_document["info"]["name"].GetString();
 		last_name = new_document["info"]["last_name"].GetString();
 		middle_name = new_document["info"]["middle_name"].GetString();
-		type = new_document["info"]["type"].GetString();
-		buf = buf + "\"name\" : " + name + "\n\t\"last_name\" : " + last_name 
+		type = new_document["info"]["user_type"].GetString();
+		buf = buf + "\"name\" : " + name + "\n\t\"last_name\" : " + last_name
 				+ "\n\t\"middle_name\" : " + middle_name + "\n\t\"type\" : " + type;
-		if (new_document["info"].HasMember("clients_numbers")) 
+		if (new_document["info"].HasMember("clients_numbers"))
 		{
 			buf = buf + "\n\t\"clients_numbers\" : [\n";
 			const rapidjson::Value& clients = new_document["info"]["clients_numbers"];
-			for (rapidjson::Value::ConstValueIterator itr = clients.Begin(); itr != clients.End(); ++itr) 
+			for (rapidjson::Value::ConstValueIterator itr = clients.Begin(); itr != clients.End(); ++itr)
 			{
 				std::string tmp = itr->GetString();
 				clients_numbers.push(tmp);
-				buf = buf + "\t\t" + tmp + "\n";				
+				buf = buf + "\t\t" + tmp + "\n";
 			}
 		}
 		buf += "}";
@@ -262,13 +262,13 @@ std::queue <Material> RequestFormer::to_get_materials()
 	*Third step: submit data in suitable format and send it to user.
 	*/
 	std::queue <Material> mtr;
-	if (_type_ == "ok") 
+	if (_type_ == "ok")
 	{
-		while (!new_document["info"].HasMember("description")) 
+		while (!new_document["info"].HasMember("description"))
 		{
                         LogPrinter::print(answer);
 			const rapidjson::Value& materials = new_document["info"]["materials"];
-			for (rapidjson::Value::ConstValueIterator itr = materials.Begin(); itr != materials.End(); ++itr) 
+			for (rapidjson::Value::ConstValueIterator itr = materials.Begin(); itr != materials.End(); ++itr)
 			{
 				Material tmp;
 				rapidjson::Value::ConstMemberIterator currentElement = itr->FindMember("title");
@@ -289,7 +289,7 @@ std::queue <Material> RequestFormer::to_get_materials()
 
 }
 
-void RequestFormer::to_send_purchase(std::string foreman_number, std::string client_number, 
+void RequestFormer::to_send_purchase(std::string foreman_number, std::string client_number,
 				 std::queue <Purchase> table)
 {
 	/*
@@ -304,7 +304,7 @@ void RequestFormer::to_send_purchase(std::string foreman_number, std::string cli
 	/*
 	*Processing table data and data validation.
 	*/
-	while (!table.empty()) 
+	while (!table.empty())
 	{
 
 		document.SetObject();
@@ -317,21 +317,21 @@ void RequestFormer::to_send_purchase(std::string foreman_number, std::string cli
 		mat.SetArray();
 		int i = 0;
 
-		while ((BUFFER_SIZE - MATERIAL_SYM_LENGTH*(++i) >= 128) && (!table.empty())) 
+		while ((BUFFER_SIZE - MATERIAL_SYM_LENGTH*(++i) >= 128) && (!table.empty()))
 		{
 			obj.SetObject();
 			std::string tmp_s = table.front().title.c_str();
-			if (tmp_s.length() <= 32) 
+			if (tmp_s.length() <= 32)
 			{
 				tmp.SetString(table.front().title.c_str(), alloc);
 				obj.AddMember("title", tmp, alloc);
-			} else 
+			} else
 			{
 				tmp_s.erase(32, tmp_s.length());
 				tmp.SetString(tmp_s.c_str(), alloc);
 				obj.AddMember("title", tmp, alloc);
 			}
-			if (sizeof(table.front().quantity) <= sizeof(long)) 
+			if (sizeof(table.front().quantity) <= sizeof(long))
 			{
 				tmp = rapidjson::Value(table.front().quantity);
 				obj.AddMember("quantity", tmp, alloc);
@@ -350,7 +350,7 @@ void RequestFormer::to_send_purchase(std::string foreman_number, std::string cli
 
 		_sc.simple_request(str);
 	}
-	
+
 	/*
 	*Sign of data end for database.
 	*/
@@ -368,7 +368,7 @@ void RequestFormer::to_send_purchase(std::string foreman_number, std::string cli
 	std::string answer = _sc.request(str);
 
 	/*
-	*Second step: send request to server, accept answer and parse it. 
+	*Second step: send request to server, accept answer and parse it.
 	*/
 	rapidjson::Document new_document;
 	new_document.Parse(answer.c_str());
