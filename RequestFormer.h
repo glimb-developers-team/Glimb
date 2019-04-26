@@ -96,7 +96,7 @@ public:
 	static void to_enter(std::string number, std::string password, 
 					std::string& name, std::string& last_name,
 					std::string& middle_name, std::string& type,
-					std::queue <std::string> clients_numbers);
+					std::queue <std::string>& clients_numbers);
 
 	/*
 	*to_get_materials() - create JSON request to server, receive answer, parse it and return the queue of materials.

@@ -179,7 +179,7 @@ void RequestFormer::to_register(std::string name, std::string last_name,
 void RequestFormer::to_enter(std::string number, std::string password, 
 				std::string& name, std::string& last_name,
 				std::string& middle_name, std::string& type, 
-				std::queue <std::string> clients_numbers)
+				std::queue <std::string>& clients_numbers)
 {
 
 	/*
