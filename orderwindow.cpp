@@ -7,9 +7,10 @@
 #include <QMessageBox>
 using namespace std;
 
-OrderWindow::OrderWindow(QWidget *parent) :
+OrderWindow::OrderWindow(QWidget *parent, std::queue<std::string> clients_numbers) :
     QWidget(parent),
-    ui(new Ui::OrderWindow)
+    ui(new Ui::OrderWindow),
+    clients_numbers(clients_numbers)
 {
     try {
         ui->setupUi(this);

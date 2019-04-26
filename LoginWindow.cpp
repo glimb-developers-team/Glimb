@@ -38,10 +38,10 @@ void LoginWindow::on_Button_Login_clicked()
     password = ui->lineEdit_Password->text().toUtf8().constData();
 
     std::string name, last_name, middle_name, type;
-    std::queue<std::string> client_numbers;
+    std::queue<std::string> clients_numbers;
     try {
-        RequestFormer::to_enter(login, password, name, last_name, middle_name, type, client_numbers);
-        sWindow = new ClientWindow(0, name, last_name, middle_name);
+        RequestFormer::to_enter(login, password, name, last_name, middle_name, type, clients_numbers);
+        sWindow = new ClientWindow(0, name, last_name, middle_name, clients_numbers);
         sWindow->show();
         this->close();
     }
