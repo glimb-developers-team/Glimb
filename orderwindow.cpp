@@ -105,5 +105,5 @@ void OrderWindow::on_orderButton_clicked()
             orderList.push(row);
             LogPrinter::print(row.title);
         }
-    RequestFormer::to_send_purchase("89165205824","1234",orderList);
+    RequestFormer::to_send_purchase("89165205824",ui->comboBox->currentText().toUtf8().constData(),orderList);
 }
