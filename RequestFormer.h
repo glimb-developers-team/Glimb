@@ -109,6 +109,12 @@ public:
 	*/
 	static void to_send_purchase(std::string foreman_number, std::string client_number, std::queue <Purchase> table);
 
+	/*
+	*to_show_purchses() - create JSON request to server, receive answer, parse it and return the queue of materials.
+	*Else it can throw that no purshase exists.
+	*/
+	static std::queue <Purchase> to_show_purchases(std::string foreman_number, std::string client_number);
+
 };
 
 #endif // REQUEST_FORMER_H

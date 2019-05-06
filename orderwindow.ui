@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>670</width>
-    <height>450</height>
+    <width>607</width>
+    <height>438</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,13 +16,42 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>5</x>
-     <y>10</y>
-     <width>661</width>
+     <x>10</x>
+     <y>0</y>
+     <width>591</width>
      <height>431</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
+    <item row="1" column="0">
+     <widget class="QLineEdit" name="searchLine">
+      <property name="minimumSize">
+       <size>
+        <width>500</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>500</width>
+        <height>16777215</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QPushButton" name="searchButton">
+      <property name="maximumSize">
+       <size>
+        <width>120</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Поиск</string>
+      </property>
+     </widget>
+    </item>
     <item row="3" column="0" colspan="3">
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0" colspan="2">
@@ -56,36 +85,6 @@
           <height>0</height>
          </size>
         </property>
-        <item>
-         <property name="text">
-          <string>1234</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>79264684482</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>1</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>789324484844</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>234829828492</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>248294882984</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item row="1" column="0">
@@ -96,16 +95,6 @@
        </widget>
       </item>
      </layout>
-    </item>
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="searchLine"/>
-    </item>
-    <item row="1" column="2">
-     <widget class="QPushButton" name="searchButton">
-      <property name="text">
-       <string>Поиск</string>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>
