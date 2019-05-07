@@ -114,6 +114,12 @@ rapidjson::Document RequestFormer::to_json(std::string request)
 		info_val.SetObject();
 		document.AddMember("info", info_val, allocator);
 	}
+	else if (request == REQUEST_GET_PURCHASES) {
+		document.SetObject();
+		document.AddMember("request", REQUEST_GET_PURCHASES, allocator);
+		info_val.SetObject();
+		document.AddMember("info", info_val, allocator);
+	}
 	return document;
 }
 
@@ -440,6 +446,57 @@ std::queue <Purchase> RequestFormer::to_show_purchases(std::string foreman_numbe
 			new_document.Parse(answer.c_str());
 		}
 		return prc;
+	}
+	else
+		throw (const char*)new_document["info"]["description"].GetString();
+}
+
+std::queue <ShoppingList> RequestFormer::to_get_purchases(std::string client_number)
+{
+	/*
+	*First step: generate request to JSON format.
+	*Request reports server that client want to see all puschases.
+	*/
+	RequestFormer sx;
+	rapidjson::Document document = sx.to_json(REQUEST_GET_PURCHASES);
+	rapidjson::StringBuffer str_buf;
+	rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(str_buf);
+	document.Accept(writer);
+	const std::string& str = str_buf.GetString();
+
+	/*
+	*Second step: send request to server, accept answer and parse it.
+	*/
+	std::string answer = _sc.request(str);
+	rapidjson::Document new_document;
+	new_document.Parse(answer.c_str());
+	std::string _type_ = new_document["type"].GetString();
+
+	/*
+	*Third step: submit data in suitable format and send it to user.
+	*/
+	std::queue <ShoppingList> spl;
+	if (_type_ == "ok")
+	{
+		while (!new_document["info"].HasMember("description"))
+		{
+                        LogPrinter::print(answer);
+			const rapidjson::Value& purchases = new_document["info"]["purchases"];
+			for (rapidjson::Value::ConstValueIterator itr = purchases.Begin(); itr != purchases.End(); ++itr)
+			{
+				ShoppingList tmp;
+				rapidjson::Value::ConstMemberIterator currentElement = itr->FindMember("id");
+				tmp.id = currentElement->value.GetString();
+				currentElement = itr->FindMember("evaluation");
+				tmp.evaluation = currentElement->value.GetBool();
+
+				spl.push(tmp);
+			}
+
+			answer = _sc.get_next_answer();
+			new_document.Parse(answer.c_str());
+		}
+		return spl;
 	}
 	else
 		throw (const char*)new_document["info"]["description"].GetString();
