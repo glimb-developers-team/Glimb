@@ -5,9 +5,6 @@
 * Date: 14.03.19
 */
 
-#define ADDRESS "77.51.199.31"
-#define PORT 4512
-
 #define MATERIAL_SYM_LENGTH 128
 
 #include "RequestFormer.h"
@@ -20,6 +17,7 @@
 #include <cstdlib>
 #include "ServerConnector.h"
 #include "LogPrinter.h"
+#include "ConfigReader.h"
 
 ServerConnector RequestFormer::_sc;
 
@@ -35,7 +33,7 @@ RequestFormer::~RequestFormer()
 
 void RequestFormer::connect_to_server()
 {
-    _sc.to_connect(ADDRESS, PORT);
+    _sc.to_connect(ConfigReader::get("IP-address"), std::stoi(ConfigReader::get("Port")));
 }
 
 void RequestFormer::disconnect()
