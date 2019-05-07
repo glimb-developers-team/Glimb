@@ -193,7 +193,6 @@ void RequestFormer::to_enter(std::string number, std::string password,
 				std::string& middle_name, std::string& type,
 				std::queue <std::string>& clients_numbers)
 {
-
 	/*
 	*First step: accept full data from user, generate it to JSON request
 	*and send to the server.
@@ -250,7 +249,6 @@ void RequestFormer::to_enter(std::string number, std::string password,
 
 std::queue <Material> RequestFormer::to_get_materials()
 {
-
 	/*
 	*First step: generate request to JSON format.
 	*Request reports server that user want to get all materials.
@@ -318,7 +316,6 @@ void RequestFormer::to_send_purchase(std::string foreman_number, std::string cli
 	*/
 	while (!table.empty())
 	{
-
 		document.SetObject();
 		document.AddMember("request", REQUEST_SEND_PURCHASE, alloc);
 		info.SetObject();
@@ -500,4 +497,89 @@ std::queue <ShoppingList> RequestFormer::to_get_purchases(std::string client_num
 	}
 	else
 		throw (const char*)new_document["info"]["description"].GetString();
+}
+
+void RequestFormer::to_send_evaluations(std::string client_number, std::queue <ShoppingList> table)
+{
+	/*
+	*First step: generate data to JSON format from current table.
+	*/
+	rapidjson::Document document;
+	rapidjson::Value info;
+	rapidjson::Value spl;
+	rapidjson::Value obj, tmp;
+	rapidjson::Document::AllocatorType& alloc = document.GetAllocator();
+
+	/*
+	*Processing table data and data validation.
+	*/
+	while (!table.empty())
+	{
+		document.SetObject();
+		document.AddMember("request", REQUEST_SEND_EVALUATIONS, alloc);
+		info.SetObject();
+		tmp.SetString(rapidjson::StringRef(client_number.c_str()));
+		info.AddMember("client_num", tmp, alloc);
+		spl.SetArray();
+		int i = 0;
+
+		while ((BUFFER_SIZE - MATERIAL_SYM_LENGTH*(++i) >= 128) && (!table.empty()))
+		{
+			obj.SetObject();
+			std::string tmp_s = table.front().id.c_str();
+			tmp.SetString(table.front().id.c_str(), alloc);
+			obj.AddMember("id", tmp, alloc);
+			tmp = rapidjson::Value(table.front().evaluation);
+			obj.AddMember("evaluation", tmp, alloc);
+
+			spl.PushBack(obj, alloc);
+			table.pop();
+		}
+		info.AddMember("purchases", spl, alloc);
+		document.AddMember("info", info, alloc);
+
+		rapidjson::StringBuffer str_buf;
+		rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(str_buf);
+		document.Accept(writer);
+		const std::string& str = str_buf.GetString();
+
+		_sc.simple_request(str);
+	}
+
+	/*
+	*Sign of data end for database.
+	*/
+	document.SetObject();
+	document.AddMember("request", REQUEST_SEND_EVALUATIONS, alloc);
+	info.SetObject();
+	info.AddMember("description", "end", alloc);
+	document.AddMember("info", info, alloc);
+
+	rapidjson::StringBuffer str_buf;
+	rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(str_buf);
+	document.Accept(writer);
+	const std::string& str = str_buf.GetString();
+
+	std::string answer = _sc.request(str);
+
+	/*
+	*Second step: send request to server, accept answer and parse it.
+	*/
+	rapidjson::Document new_document;
+	new_document.Parse(answer.c_str());
+	std::string buf;
+	std::string _type_ = new_document["type"].GetString();
+	if (_type_ == "ok")
+	{
+		buf = "\"type\" : ";
+		buf = buf + _type_ + "\n\"info\" {\n\t\n}";
+		LogPrinter::print(buf);
+	}
+	else
+	{
+		buf = "\"error\" : ";
+		buf = buf + new_document["info"]["description"].GetString();
+		LogPrinter::print(buf);
+		throw (const char*)new_document["info"]["description"].GetString();
+	}
 }

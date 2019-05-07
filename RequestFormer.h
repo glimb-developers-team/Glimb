@@ -126,6 +126,11 @@ public:
 	*/
 	static std::queue <ShoppingList> to_get_purchases(std::string client_number);
 
+	/*
+	*to_send_evaluations() - create JSON file from parameter and send it to server.
+	*/
+	static void to_send_evaluations(std::string client_number, std::queue <ShoppingList> table);
+
 };
 
 #endif // REQUEST_FORMER_H
