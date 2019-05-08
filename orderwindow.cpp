@@ -35,8 +35,10 @@ OrderWindow::OrderWindow(QWidget *parent, std::queue<std::string> clients_number
     catch (const char *error) {
         QMessageBox::critical(this, "Внимание!", error);
     }
-    for (;  ) //вот цикл
-    ui->comboBox->addItem(clients_numbers[]) // ввод значений
+    while (!clients_numbers.empty()) {
+        ui->comboBox->addItem(clients_numbers.front().c_str());
+        clients_numbers.pop();
+    }
 }
 
 OrderWindow::~OrderWindow()
