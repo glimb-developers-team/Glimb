@@ -33,7 +33,8 @@ SOURCES += \
     src/LogPrinter.cpp \
     src/ServerConnector.cpp \
     src/orderwindow.cpp \
-    src/ClientWindow.cpp
+    src/ClientWindow.cpp \
+    src/ConfigReader.cpp
 
 
 HEADERS += \
@@ -43,7 +44,8 @@ HEADERS += \
     src/LogPrinter.h \
     src/ServerConnector.h \
     src/orderwindow.h \
-    src/ClientWindow.h
+    src/ClientWindow.h \
+    src/ConfigReader.h
 
 
 FORMS += \
