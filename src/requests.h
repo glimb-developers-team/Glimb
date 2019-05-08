@@ -17,5 +17,8 @@
 #define REQUEST_REGISTRATION "registration"
 #define REQUEST_GET_MATERIALS "get_materials"
 #define REQUEST_SEND_PURCHASE "send_purchase"
+#define REQUEST_SHOW_PURCHASES "show_purchases"
+#define REQUEST_GET_PURCHASES "get_purchases"
+#define REQUEST_SEND_EVALUATIONS "send_evaluations"
 
 #endif // REQUESTS_H

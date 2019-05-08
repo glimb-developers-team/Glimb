@@ -26,6 +26,11 @@ struct Purchase {
 	int quantity;
 };
 
+struct ShoppingList {
+	std::string id;
+	bool evaluation;
+};
+
 class RequestFormer {
 private:
 	std::string _name;
@@ -108,6 +113,23 @@ public:
 	*to_send_materials() - create JSON file from purchase and send it to server.
 	*/
 	static void to_send_purchase(std::string foreman_number, std::string client_number, std::queue <Purchase> table);
+
+	/*
+	*to_show_purchses() - create JSON request to server, receive answer, parse it and return the queue of purchases.
+	*Else it can throw that no purshase exists.
+	*/
+	static std::queue <Purchase> to_show_purchases(std::string foreman_number, std::string client_number);
+
+	/*
+	*to_get_purchses() - create JSON request to server, receive answer, parse it and return the queue of purchases.
+	*Else it can throw that no purshase exists.
+	*/
+	static std::queue <ShoppingList> to_get_purchases(std::string client_number);
+
+	/*
+	*to_send_evaluations() - create JSON file from parameter and send it to server.
+	*/
+	static void to_send_evaluations(std::string client_number, std::queue <ShoppingList> table);
 
 };
 
