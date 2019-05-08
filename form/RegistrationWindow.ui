@@ -90,7 +90,7 @@
         <string>Я исполнитель</string>
        </property>
        <property name="checked">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -236,6 +236,9 @@
       <widget class="QRadioButton" name="radioButton_Client">
        <property name="text">
         <string>Я заказчик</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
