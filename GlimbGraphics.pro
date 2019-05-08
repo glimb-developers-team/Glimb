@@ -6,9 +6,10 @@
 
 QT       += core gui
 
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Glimb
+TARGET = ../bin/Glimb
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -24,28 +25,28 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp \
-    LoginWindow.cpp \
-    RegistrationWindow.cpp \
-    RequestFormer.cpp \
-    LogPrinter.cpp \
-    ServerConnector.cpp \
-    orderwindow.cpp \
-    ClientWindow.cpp
+        src/main.cpp \
+    src/LoginWindow.cpp \
+    src/RegistrationWindow.cpp \
+    src/RequestFormer.cpp \
+    src/LogPrinter.cpp \
+    src/ServerConnector.cpp \
+    src/orderwindow.cpp \
+    src/ClientWindow.cpp
 
 
 HEADERS += \
-    RegistrationWindow.h \
-    LoginWindow.h \
-    RequestFormer.h \
-    LogPrinter.h \
-    ServerConnector.h \
-    orderwindow.h \
-    ClientWindow.h
+    src/RegistrationWindow.h \
+    src/LoginWindow.h \
+    src/RequestFormer.h \
+    src/LogPrinter.h \
+    src/ServerConnector.h \
+    src/orderwindow.h \
+    src/ClientWindow.h
 
 
 FORMS += \
-    LoginWindow.ui \
-    RegistrationWindow.ui \
-    orderwindow.ui \
-    clientwindow.ui
+    form/LoginWindow.ui \
+    form/RegistrationWindow.ui \
+    form/orderwindow.ui \
+    form/clientwindow.ui
