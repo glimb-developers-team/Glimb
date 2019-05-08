@@ -52,10 +52,7 @@ void RegistrationWindow::on_Button_RegistrationTwo_clicked()
                                             ui->lineEdit_Phone->text().toUtf8().constData(),
                                             ui->lineEdit_Password->text().toUtf8().constData(),
                             type,
-                                            ui->lineEdit_PhoneContractor->text().toUtf8().constData()
-                                            );
-                 //sWindow = new ClientWindow (0, ui->lineEdit_Name->text().toUtf8().constData(),  ui->lineEdit_LastName->text().toUtf8().constData(),
-                                           // ui->lineEdit_MiddleName->text().toUtf8().constData());
+                                            ui->lineEdit_PhoneContractor->text().toUtf8().constData());
                  this->close();
               }
         catch (char const *error)
