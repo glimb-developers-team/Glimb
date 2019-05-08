@@ -5,3 +5,4 @@ Makefile
 ui_*
 Glimb
 *.stash
+*.user
