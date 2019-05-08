@@ -1,0 +1,5 @@
+*.o
+*.txt
+moc_*
+Makefile
+ui_*
