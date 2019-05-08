@@ -1,5 +1,5 @@
 *.o
-*.txt
+log.txt
 moc_*
 Makefile
 ui_*
