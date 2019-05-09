@@ -104,30 +104,37 @@ public:
 					std::queue <std::string>& clients_numbers);
 
 	/*
-	*to_get_materials() - create JSON request to server, receive answer, parse it and return the queue of materials.
+	*to_get_materials() - send all of materials to foreman.
+	*Сreate JSON request to server, receive answer, parse it and return the queue of materials.
 	*Else it can throw that such objects do not exist.
 	*/
 	static std::queue <Material> to_get_materials();
 
 	/*
-	*to_send_materials() - create JSON file from purchase and send it to server.
+	*to_send_materials() - choose materials for purchase and send it to server.
+	*Create JSON file from purchase and send it to server.
 	*/
-	static void to_send_purchase(std::string foreman_number, std::string client_number, std::queue <Purchase> table);
+	static void to_send_purchase(std::string foreman_number, std::string client_number, 
+					std::queue <Purchase> table);
 
 	/*
-	*to_show_purchses() - create JSON request to server, receive answer, parse it and return the queue of purchases.
+	*to_show_purchses() - show 
+	*Create JSON request to server, receive answer, parse it and return the queue of purchases.
 	*Else it can throw that no purshase exists.
 	*/
-	static std::queue <Purchase> to_show_purchases(std::string foreman_number, std::string client_number);
+	static std::queue <Purchase> to_show_purchases(std::string foreman_number, 
+					std::string client_number);
 
 	/*
-	*to_get_purchses() - create JSON request to server, receive answer, parse it and return the queue of purchases.
+	*to_get_purchses() - show all of purchases, which client can evaluate: agree(yes) or disagree(no) with purchase.
+	*Create JSON request to server, receive answer, parse it and return the queue of purchases.
 	*Else it can throw that no purshase exists.
 	*/
 	static std::queue <ShoppingList> to_get_purchases(std::string client_number);
 
 	/*
-	*to_send_evaluations() - create JSON file from parameter and send it to server.
+	*to_send_evaluations() - send evaluations of purchases to server.
+	*Create JSON file from parameters and send it to server.
 	*/
 	static void to_send_evaluations(std::string client_number, std::queue <ShoppingList> table);
 
