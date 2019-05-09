@@ -9,8 +9,8 @@
 
 #include "RequestFormer.h"
 #include "requests.h"
-#include "rapidjson/stringbuffer.h"
-#include "rapidjson/prettywriter.h"
+#include "../include/rapidjson/stringbuffer.h"
+#include "../include/rapidjson/prettywriter.h"
 #include <stdexcept>
 #include <iostream>
 #include <cstdio>

@@ -8,8 +8,8 @@
 #ifndef REQUEST_FORMER_H
 #define REQUEST_FORMER_H
 
-#include "rapidjson/document.h"
-#include "rapidjson/writer.h"
+#include "../include/rapidjson/document.h"
+#include "../include/rapidjson/writer.h"
 #include <string>
 #include <queue>
 #include "ServerConnector.h"
