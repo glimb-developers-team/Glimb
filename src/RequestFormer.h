@@ -26,7 +26,24 @@ struct Purchase {
 	int quantity;
 };
 
-struct ShoppingList {
+struct Buying {
+	std::string title;
+	int quantity;
+	double price;
+};
+
+struct ClientList {
+	std::string id;
+	bool evaluation;
+	std::queue <Buying> purchase;
+};
+
+struct ForemanList {
+	std::string id;
+	std::queue <Buying> purchase;
+};
+
+struct Evaluation {
 	std::string id;
 	bool evaluation;
 };
@@ -122,7 +139,7 @@ public:
 	*Create JSON request to server, receive answer, parse it and return the queue of purchases.
 	*Else it can throw that no purshase exists.
 	*/
-	static std::queue <Purchase> to_show_purchases(std::string foreman_number, 
+	static std::queue <ForemanList> to_show_purchases(std::string foreman_number, 
 					std::string client_number);
 
 	/*
@@ -130,13 +147,13 @@ public:
 	*Create JSON request to server, receive answer, parse it and return the queue of purchases.
 	*Else it can throw that no purshase exists.
 	*/
-	static std::queue <ShoppingList> to_get_purchases(std::string client_number);
+	static std::queue <ClientList> to_get_purchases(std::string client_number);
 
 	/*
 	*to_send_evaluations() - send evaluations of purchases to server.
 	*Create JSON file from parameters and send it to server.
 	*/
-	static void to_send_evaluations(std::string client_number, std::queue <ShoppingList> table);
+	static void to_send_evaluations(std::string client_number, std::queue <Evaluation> table);
 
 };
 

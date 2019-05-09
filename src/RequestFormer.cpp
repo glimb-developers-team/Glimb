@@ -396,7 +396,7 @@ void RequestFormer::to_send_purchase(std::string foreman_number, std::string cli
 	}
 }
 
-std::queue <Purchase> RequestFormer::to_show_purchases(std::string foreman_number, std::string client_number)
+std::queue <ForemanList> RequestFormer::to_show_purchases(std::string foreman_number, std::string client_number)
 {
 	/*
 	*First step: generate request to JSON format.
@@ -420,33 +420,46 @@ std::queue <Purchase> RequestFormer::to_show_purchases(std::string foreman_numbe
 	/*
 	*Third step: submit data in suitable format and send it to user.
 	*/
-	std::queue <Purchase> prc;
+	std::queue <ForemanList> frm;
 	if (_type_ == "ok")
 	{
 		while (!new_document["info"].HasMember("description"))
 		{
                         LogPrinter::print(answer);
-			const rapidjson::Value& purchases = new_document["info"]["purchases"];
-			for (rapidjson::Value::ConstValueIterator itr = purchases.Begin(); itr != purchases.End(); ++itr)
+			const rapidjson::Value& purchase_array = new_document["info"]["purchases"];
+			for (rapidjson::Value::ConstValueIterator itr = purchase_array.Begin(); itr != purchase_array.End(); ++itr)
 			{
-				Purchase tmp;
-				rapidjson::Value::ConstMemberIterator currentElement = itr->FindMember("title");
-				tmp.title = currentElement->value.GetString();
-				currentElement = itr->FindMember("quantity");
-				tmp.quantity = currentElement->value.GetInt();
+				ForemanList tmp_fl;
+				rapidjson::Value::ConstMemberIterator curElem_1 = itr->FindMember("id");
+				tmp_fl.id = curElem_1->value.GetString();
+				const rapidjson::Value& p = new_document["info"]["purchases"]["materials"];
+				std::queue <Buying> tmp_qb;
+				for (rapidjson::Value::ConstValueIterator it = p.Begin(); it != p.End(); ++it)
+				{
+					Buying tmp_b;
+					rapidjson::Value::ConstMemberIterator curElem_2 = it->FindMember("title");
+					tmp_b.title = curElem_2->value.GetString();
+					curElem_2 = it->FindMember("quantity");
+					tmp_b.quantity = curElem_2->value.GetInt();
+					curElem_2 = it->FindMember("price");
+					tmp_b.price = curElem_2->value.GetDouble();
 
-				prc.push(tmp);
+					tmp_qb.push(tmp_b);
+				}
+
+				tmp_fl.purchase = tmp_qb;
+				frm.push(tmp_fl);
 			}
 			answer = _sc.get_next_answer();
 			new_document.Parse(answer.c_str());
 		}
-		return prc;
+		return frm;
 	}
 	else
 		throw (const char*)new_document["info"]["description"].GetString();
 }
 
-std::queue <ShoppingList> RequestFormer::to_get_purchases(std::string client_number)
+std::queue <ClientList> RequestFormer::to_get_purchases(std::string client_number)
 {
 	/*
 	*First step: generate request to JSON format.
@@ -470,34 +483,48 @@ std::queue <ShoppingList> RequestFormer::to_get_purchases(std::string client_num
 	/*
 	*Third step: submit data in suitable format and send it to user.
 	*/
-	std::queue <ShoppingList> spl;
+	std::queue <ClientList> cll;
 	if (_type_ == "ok")
 	{
 		while (!new_document["info"].HasMember("description"))
 		{
                         LogPrinter::print(answer);
-			const rapidjson::Value& purchases = new_document["info"]["purchases"];
-			for (rapidjson::Value::ConstValueIterator itr = purchases.Begin(); itr != purchases.End(); ++itr)
+			const rapidjson::Value& purchase_array = new_document["info"]["purchases"];
+			for (rapidjson::Value::ConstValueIterator itr = purchase_array.Begin(); itr != purchase_array.End(); ++itr)
 			{
-				ShoppingList tmp;
-				rapidjson::Value::ConstMemberIterator currentElement = itr->FindMember("id");
-				tmp.id = currentElement->value.GetString();
-				currentElement = itr->FindMember("evaluation");
-				tmp.evaluation = currentElement->value.GetBool();
+				ClientList tmp_cll;
+				rapidjson::Value::ConstMemberIterator curElem_1 = itr->FindMember("id");
+				tmp_cll.id = curElem_1->value.GetString();
+				curElem_1 = itr->FindMember("evaluation");
+				tmp_cll.evaluation = curElem_1->value.GetBool();
+				const rapidjson::Value& p = new_document["info"]["purchases"]["materials"];
+				std::queue <Buying> tmp_qb;
+				for (rapidjson::Value::ConstValueIterator it = p.Begin(); it != p.End(); ++it)
+				{
+					Buying tmp_b;
+					rapidjson::Value::ConstMemberIterator curElem_2 = it->FindMember("title");
+					tmp_b.title = curElem_2->value.GetString();
+					curElem_2 = it->FindMember("quantity");
+					tmp_b.quantity = curElem_2->value.GetInt();
+					curElem_2 = it->FindMember("price");
+					tmp_b.price = curElem_2->value.GetDouble();
 
-				spl.push(tmp);
+					tmp_qb.push(tmp_b);
+				}
+
+				tmp_cll.purchase = tmp_qb;
+				cll.push(tmp_cll);
 			}
-
 			answer = _sc.get_next_answer();
 			new_document.Parse(answer.c_str());
 		}
-		return spl;
+		return cll;
 	}
 	else
 		throw (const char*)new_document["info"]["description"].GetString();
 }
 
-void RequestFormer::to_send_evaluations(std::string client_number, std::queue <ShoppingList> table)
+void RequestFormer::to_send_evaluations(std::string client_number, std::queue <Evaluation> table)
 {
 	/*
 	*First step: generate data to JSON format from current table.
