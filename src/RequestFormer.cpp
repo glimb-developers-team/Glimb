@@ -5,7 +5,7 @@
 * Date: 14.03.19
 */
 
-#define MATERIAL_SYM_LENGTH 128
+#define MATERIAL_SYM_LENGTH 256
 
 #include "RequestFormer.h"
 #include "requests.h"
