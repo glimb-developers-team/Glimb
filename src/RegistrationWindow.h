@@ -20,6 +20,10 @@ private slots:
 
     void on_Button_RegistrationTwo_clicked();
 
+    void on_radioButton_Contractor_clicked();
+
+    void on_radioButton_Client_clicked();
+
 private:
     ClientWindow *sWindow;
     Ui::RegistrationWindow *ui;

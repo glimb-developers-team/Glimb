@@ -76,6 +76,9 @@
          <height>21</height>
         </size>
        </property>
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
       </widget>
      </item>
      <item row="7" column="1">
@@ -87,7 +90,7 @@
         <string>Я исполнитель</string>
        </property>
        <property name="checked">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -191,6 +194,9 @@
          <height>21</height>
         </size>
        </property>
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
       </widget>
      </item>
      <item row="0" column="0" alignment="Qt::AlignRight">
@@ -230,6 +236,9 @@
       <widget class="QRadioButton" name="radioButton_Client">
        <property name="text">
         <string>Я заказчик</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

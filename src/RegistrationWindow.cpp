@@ -38,9 +38,11 @@ void RegistrationWindow::on_Button_RegistrationTwo_clicked()
            ui->lineEdit_LastName->text().length() == 0 ||
            ui->lineEdit_Phone->text().length() == 0 ||
            ui->lineEdit_Password->text().length() == 0 ||
-           ui->lineEdit_RepeatPassword->text().length() == 0)
+           ui->lineEdit_RepeatPassword->text().length() == 0 ||
+           (ui->radioButton_Client->isChecked() && ui->lineEdit_PhoneContractor->text().length() == 0))
         {
             QMessageBox::critical(0, "Ошибка", "Заполните все обязательные поля!");
+
         }
         else
         {
@@ -52,12 +54,7 @@ void RegistrationWindow::on_Button_RegistrationTwo_clicked()
                                             ui->lineEdit_Phone->text().toUtf8().constData(),
                                             ui->lineEdit_Password->text().toUtf8().constData(),
                             type,
-                                            ui->lineEdit_PhoneContractor->text().toUtf8().constData()
-                                            );
-                 sWindow = new ClientWindow (0, ui->lineEdit_Name->text().toUtf8().constData(),  ui->lineEdit_LastName->text().toUtf8().constData(),
-                                            ui->lineEdit_MiddleName->text().toUtf8().constData());
-
-                 sWindow->show();
+                                            ui->lineEdit_PhoneContractor->text().toUtf8().constData());
                  this->close();
               }
         catch (char const *error)
@@ -67,4 +64,15 @@ void RegistrationWindow::on_Button_RegistrationTwo_clicked()
       }
     }
     else QMessageBox::critical(0, "Ошибка регистрации", "Пароли не совпадают!");
+}
+
+void RegistrationWindow::on_radioButton_Contractor_clicked()
+{
+    ui->lineEdit_PhoneContractor->clear();
+    ui->lineEdit_PhoneContractor->setEnabled(false);
+}
+
+void RegistrationWindow::on_radioButton_Client_clicked()
+{
+     ui->lineEdit_PhoneContractor->setDisabled(false);
 }
