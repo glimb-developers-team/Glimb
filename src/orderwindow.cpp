@@ -14,7 +14,7 @@ OrderWindow::OrderWindow(QWidget *parent, std::queue<std::string> clients_number
 {
     try {
         ui->setupUi(this);
-        ui->tableWidget->setRowCount(10);
+        ui->tableWidget->setRowCount(78);
         ui->tableWidget->setColumnCount(4);
         ui->tableWidget->setHorizontalHeaderLabels(QStringList()<<"Наименование"<<"Единицы измерения"<<"Цена"<<"Кол-во");
 
