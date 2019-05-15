@@ -10,6 +10,7 @@
 * See all methods description in the header file.
 */
 
+#include <iostream>
 #include "ServerConnector.h"
 #include "requests.h"
 #ifdef __unix__
@@ -21,7 +22,7 @@
 	#include <netdb.h>
 
 	#define SOCK int
-	#define SOKET_ERROR -1
+	#define SOCKET_ERROR -1
 
 	void sock_init()
 	{
@@ -37,14 +38,14 @@
 
 	#define SOCK SOCKET
 
-	sock_init()
+    void sock_init()
 	{
 		// Initializing WinSock
 		WSAData data;
 		WORD ver = MAKEWORD(2, 2);
 		int wsResult = WSAStartup(ver, &data);
 		if (wsResult != 0) {
-			throw "Failed to initialize WinSock"
+			throw "Failed to initialize WinSock";
 		}
 	}
 
@@ -55,15 +56,17 @@
 	}
 #endif
 
-ServerConnector::ServerConnector() : _connected(false),
-_sockfd(socket(AF_INET, SOCK_STREAM, 0))
+ServerConnector::ServerConnector() : _connected(false)
 {
+    sock_init();
+    _sockfd = socket(AF_INET, SOCK_STREAM, 0);
+
 #ifdef __unix__
 	if(_sockfd < 0) {
 #elif defined _WIN32
-	if(_sockfd == INVALID_SOCKET) {
+    if(_sockfd == INVALID_SOCKET) {
 #endif
-		throw "Can't establish socket";
+        throw "Can't establish socket";
 	}
 }
 
@@ -85,7 +88,7 @@ void ServerConnector::to_connect(std::string address, int port)
 
 	/* Connecting */
 	result = connect(_sockfd, (struct sockaddr *)&socket_address, sizeof(socket_address));
-	if (result == SOKET_ERROR) {
+    if (result == SOCKET_ERROR) {
 		throw "Failed to connect to the server";
 	}
 
@@ -97,7 +100,7 @@ void ServerConnector::close_connection()
 	if (!_connected) {
 		return;
 	}
-	close(_sockfd);
+    sock_close(_sockfd);
 	_connected = false;
 }
 
