@@ -41,9 +41,19 @@ void LoginWindow::on_Button_Login_clicked()
     std::queue<std::string> clients_numbers;
     try {
         RequestFormer::to_enter(login, password, name, last_name, middle_name, type, clients_numbers);
-        sWindow = new ClientWindow(0, name, last_name, middle_name, clients_numbers);
-        sWindow->show();
-        this->close();
+        if(type == "foreman")
+        {
+            sWindow = new ClientWindow(0, name, last_name, middle_name, clients_numbers);
+            sWindow->show();
+            this->close();
+        }
+        if(type == "client")
+        {
+            WindowCustomer = new CustomerWindow(0, name, last_name, middle_name);
+            WindowCustomer->show();
+            this->close();
+        }
+
     }
     catch (char const *error) {
 

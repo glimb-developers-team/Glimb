@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "ClientWindow.h"
+#include "CustomerWindow.h"
 
 
 namespace Ui {
@@ -27,6 +28,7 @@ private slots:
 
 private:
     ClientWindow *sWindow;
+    CustomerWindow *WindowCustomer;
     Ui::LoginWindow *ui;
 };
 

@@ -34,7 +34,9 @@ SOURCES += \
     src/ServerConnector.cpp \
     src/orderwindow.cpp \
     src/ClientWindow.cpp \
-    src/ConfigReader.cpp
+    src/ConfigReader.cpp \
+    CustomerWindow.cpp \
+    OrderCustomerWindow.cpp
 
 
 HEADERS += \
@@ -45,11 +47,15 @@ HEADERS += \
     src/ServerConnector.h \
     src/orderwindow.h \
     src/ClientWindow.h \
-    src/ConfigReader.h
+    src/ConfigReader.h \
+    CustomerWindow.h \
+    OrderCustomerWindow.h
 
 
 FORMS += \
     form/LoginWindow.ui \
     form/RegistrationWindow.ui \
     form/orderwindow.ui \
-    form/clientwindow.ui
+    form/clientwindow.ui \
+    CustomerWindow.ui \
+    OrderCustomerWindow.ui

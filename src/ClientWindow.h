@@ -20,8 +20,6 @@ public:
 
 private slots:
 
-
-
     void on_but_clicked();
 
 private:
