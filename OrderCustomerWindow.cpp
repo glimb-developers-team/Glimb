@@ -1,22 +1,24 @@
 #include "OrderCustomerWindow.h"
 #include "ui_OrderCustomerWindow.h"
+#include <string>
 
 OrderCustomerWindow::OrderCustomerWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::OrderCustomerWindow)
+
 {
     ui->setupUi(this);
-
-    QTreeWidgetItem *FirstLevel = new QTreeWidgetItem(ui->treeWidget);
-        ui->treeWidget->addTopLevelItem(FirstLevel);
-        FirstLevel->setText(0,"Закупка 1");
-        QTreeWidgetItem *item = new QTreeWidgetItem(FirstLevel);
-        item->setText(0,"Материалы");
-    QTreeWidgetItem *SecondLevel = new QTreeWidgetItem(ui->treeWidget);
-        ui->treeWidget->addTopLevelItem(SecondLevel);
-        SecondLevel->setText(0,"Закупка 2");
-        QTreeWidgetItem *item2 = new QTreeWidgetItem(SecondLevel);
-        item2->setText(0,"Материалы");
+    for (int g = 0; g < 5; g++)
+    {
+        QTreeWidgetItem *i = new QTreeWidgetItem(ui->treeWidget);
+            ui->treeWidget->addTopLevelItem(i);
+            i->setText(0,QString::fromStdString(std::string("Закупка")+std::to_string(g)));
+        for(int k = 0; k < 5; k++)
+        {
+            QTreeWidgetItem *item = new QTreeWidgetItem(i);
+            item->setText(0,QString::fromStdString(std::string("Материалы")+std::to_string(k)));
+        }
+    }
 
 }
 
