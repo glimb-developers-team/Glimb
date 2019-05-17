@@ -290,6 +290,7 @@ std::queue <Material> RequestFormer::to_get_materials()
 			answer = _sc.get_next_answer();
 			new_document.Parse(answer.c_str());
 		}
+		LogPrinter::print(answer);
 		return mtr;
 	}
 	else
