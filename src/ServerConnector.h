@@ -17,10 +17,17 @@
 
 #include <string>
 
+#ifdef __unix__
+	#define SOCK int
+#elif defined _WIN32
+	#include <WS2tcpip.h>
+	#define SOCK SOCKET
+#endif
+
 class ServerConnector {
 private:
 	bool _connected;
-	int _sockfd;
+	SOCK _sockfd;
 
 public:
 	ServerConnector();
