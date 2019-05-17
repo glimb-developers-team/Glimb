@@ -48,16 +48,30 @@
   <widget class="QPushButton" name="but">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>80</y>
-     <width>131</width>
+     <x>520</x>
+     <y>300</y>
+     <width>181</width>
      <height>41</height>
     </rect>
    </property>
    <property name="text">
-    <string>Закупки</string>
+    <string>Создать закупку</string>
    </property>
   </widget>
+  <widget class="QTreeWidget" name="treeWidget">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>70</y>
+     <width>201</width>
+     <height>241</height>
+    </rect>
+   </property>
+  </widget>
+  <zorder>label_FIO</zorder>
+  <zorder>label</zorder>
+  <zorder>treeWidget</zorder>
+  <zorder>but</zorder>
  </widget>
  <resources/>
  <connections/>
