@@ -316,7 +316,7 @@ void RequestFormer::to_send_purchase(std::string foreman_number, std::string cli
 		tmp.SetString(rapidjson::StringRef(client_number.c_str()));
 		info.AddMember("client_num", tmp, alloc);
 		tmp = rapidjson::Value(total_cost);
-		obj.AddMember("total_cost", tmp, alloc);
+		info.AddMember("total_cost", tmp, alloc);
 		mat.SetArray();
 		int i = 0;
 
