@@ -5,7 +5,7 @@
 * Date: 14.03.19
 */
 
-#define MATERIAL_SYM_LENGTH 128
+#define MATERIAL_SYM_LENGTH 256
 
 #include "RequestFormer.h"
 #include "requests.h"
@@ -324,16 +324,9 @@ void RequestFormer::to_send_purchase(std::string foreman_number, std::string cli
 		{
 			obj.SetObject();
 			std::string tmp_s = table.front().title.c_str();
-			if (tmp_s.length() <= 32)
-			{
-				tmp.SetString(table.front().title.c_str(), alloc);
-				obj.AddMember("title", tmp, alloc);
-			} else
-			{
-				tmp_s.erase(32, tmp_s.length());
-				tmp.SetString(tmp_s.c_str(), alloc);
-				obj.AddMember("title", tmp, alloc);
-			}
+			tmp.SetString(table.front().title.c_str(), alloc);
+			obj.AddMember("title", tmp, alloc);
+			
 			if (sizeof(table.front().quantity) <= sizeof(long))
 			{
 				tmp = rapidjson::Value(table.front().quantity);
@@ -385,13 +378,13 @@ void RequestFormer::to_send_purchase(std::string foreman_number, std::string cli
 	{
 		buf = "\"type\" : ";
 		buf = buf + _type_ + "\n\"info\" {\n\t\n}";
-		LogPrinter::print(buf);
+		//LogPrinter::print(buf);
 	}
 	else
 	{
 		buf = "\"error\" : ";
 		buf = buf + new_document["info"]["description"].GetString();
-		LogPrinter::print(buf);
+		//LogPrinter::print(buf);
 		throw (const char*)new_document["info"]["description"].GetString();
 	}
 }
@@ -409,7 +402,7 @@ std::queue <ShoppingList> RequestFormer::to_show_purchases(std::string foreman_n
 	rapidjson::Document::AllocatorType& alloc = document.GetAllocator();
 	document.SetObject();
 
-	document.AddMember("request", REQUEST_SEND_PURCHASE, alloc);
+	document.AddMember("request", REQUEST_GET_PURCHASES, alloc);
 	info.SetObject();
 	tmp.SetString(rapidjson::StringRef(foreman_number.c_str()));
 	info.AddMember("foreman_num", tmp, alloc);
@@ -428,6 +421,7 @@ std::queue <ShoppingList> RequestFormer::to_show_purchases(std::string foreman_n
 	std::string answer = _sc.request(str);
 	rapidjson::Document new_document;
 	new_document.Parse(answer.c_str());
+	LogPrinter::print(answer);
 	std::string _type_ = new_document["type"].GetString();
 
 	/*
@@ -438,18 +432,24 @@ std::queue <ShoppingList> RequestFormer::to_show_purchases(std::string foreman_n
 	{
 		
 		std::string _method_ = new_document["info"]["method"].GetString();
-		while (_method_ != "end of transaction")
+		while (_method_ != "end of translation")
 		{
-                        LogPrinter::print(answer);
 
 			ShoppingList tmp_sl;
-			tmp_sl.purchase_id = new_document["info"]["purchase_id"].GetString();
+			tmp_sl.purchase_id = new_document["info"]["purchase_id"].GetInt();
 			tmp_sl.total_cost = new_document["info"]["total_cost"].GetDouble();
 			tmp_sl.status = new_document["info"]["status"].GetString();
 
 			_method_ = new_document["info"]["method"].GetString();
+
+			answer = _sc.get_next_answer();
+			new_document.Parse(answer.c_str());
+
+			LogPrinter::print(answer);
+	
 			while (_method_ != "end")
-			{
+			{				
+
 				const rapidjson::Value& mat = new_document["info"]["materials"];
 				std::queue <Buying> tmp_qb;
 				for (rapidjson::Value::ConstValueIterator itr = mat.Begin(); itr != mat.End(); ++itr)
@@ -458,7 +458,7 @@ std::queue <ShoppingList> RequestFormer::to_show_purchases(std::string foreman_n
 					rapidjson::Value::ConstMemberIterator curElem = itr->FindMember("title");
 					tmp_b.title = curElem->value.GetString();
 					curElem = itr->FindMember("quantity");
-					tmp_b.quantity = curElem->value.GetInt();
+					tmp_b.quantity = curElem->value.GetDouble();
 					curElem = itr->FindMember("cost");
 					tmp_b.cost = curElem->value.GetDouble();
 						
@@ -470,13 +470,22 @@ std::queue <ShoppingList> RequestFormer::to_show_purchases(std::string foreman_n
 
 				answer = _sc.get_next_answer();
 				new_document.Parse(answer.c_str());
+
+				LogPrinter::print(answer);
+
+				if (new_document["info"].HasMember("method"))	
+					_method_ = new_document["info"]["method"].GetString();
 			}
 
 			answer = _sc.get_next_answer();
 			new_document.Parse(answer.c_str());
-			LogPrinter::print(answer);
-		}
 
+			LogPrinter::print(answer);
+
+			if (new_document["info"].HasMember("method"))	
+					_method_ = new_document["info"]["method"].GetString();
+		}
+		
 		return frm;
 	}
 	else
