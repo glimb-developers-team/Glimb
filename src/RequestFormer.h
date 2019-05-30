@@ -34,7 +34,7 @@ struct Buying {
 };
 
 struct ShoppingList{
-	std::string purchase_id;
+	int purchase_id;
 	double total_cost;
 	std::string status;
 	std::queue <Buying> purchase;
