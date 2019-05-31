@@ -17,7 +17,7 @@
 
 #include <string>
 
-#ifdef __unix__
+#if defined(__unix__) || defined (TARGET_OS_MAC)
 	#define SOCK int
 #elif defined _WIN32
 	#include <WS2tcpip.h>
