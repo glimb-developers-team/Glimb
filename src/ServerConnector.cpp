@@ -14,7 +14,7 @@
 #include "ServerConnector.h"
 #include "LogPrinter.h"
 #include "requests.h"
-#if defined(__unix__) || defined (TARGET_OS_MAC)
+#if defined(__unix__) || defined (__APPLE__)
 	#include <sys/types.h>
 	#include <sys/socket.h>
 	#include <netinet/in.h>
@@ -62,7 +62,7 @@ ServerConnector::ServerConnector() : _connected(false)
     sock_init();
     _sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
-#ifdef __unix__
+#if defined(__unix__) || defined (__APPLE__)
 	if(_sockfd < 0) {
 #elif defined _WIN32
     if(_sockfd == INVALID_SOCKET) {
