@@ -459,9 +459,7 @@ std::queue <ShoppingList> RequestFormer::to_show_purchases(std::string foreman_n
 						
 					tmp_qb.push(tmp_b);
 				}
-
 				tmp_sl.purchase = tmp_qb;
-				frm.push(tmp_sl);
 
 				answer = _sc.get_next_answer();
 				new_document.Parse(answer.c_str());
@@ -471,6 +469,10 @@ std::queue <ShoppingList> RequestFormer::to_show_purchases(std::string foreman_n
 				if (new_document["info"].HasMember("method"))	
 					_method_ = new_document["info"]["method"].GetString();
 			}
+
+			
+			
+			frm.push(tmp_sl);
 
 			answer = _sc.get_next_answer();
 			new_document.Parse(answer.c_str());
