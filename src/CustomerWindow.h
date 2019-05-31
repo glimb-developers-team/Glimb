@@ -13,7 +13,8 @@ class CustomerWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit CustomerWindow(QWidget *parent = 0, std::string name = "", std::string last_name = "", std::string middle_name = "");
+    explicit CustomerWindow(QWidget *parent = 0, std::string name = "",
+                            std::string last_name = "", std::string middle_name = "", std::string foreman_number = "");
     ~CustomerWindow();
 
 private slots:
@@ -25,6 +26,7 @@ private:
     std::string name;
     std::string last_name;
     std::string middle_name;
+    std::string foreman_number;
 
 };
 

@@ -37,19 +37,19 @@ void LoginWindow::on_Button_Login_clicked()
     std::string password;
     password = ui->lineEdit_Password->text().toUtf8().constData();
 
-    std::string name, last_name, middle_name, type;
+    std::string name, last_name, middle_name, type, foreman_number;
     std::queue<std::string> clients_numbers;
     try {
-        RequestFormer::to_enter(login, password, name, last_name, middle_name, type, clients_numbers);
+        RequestFormer::to_enter(login, password, name, last_name, middle_name, type, clients_numbers, foreman_number);
         if(type == "foreman")
         {
-            sWindow = new ClientWindow(0, name, last_name, middle_name, clients_numbers);
+            sWindow = new ClientWindow(0, name, last_name, middle_name, clients_numbers, login);
             sWindow->show();
             this->close();
         }
         if(type == "client")
         {
-            WindowCustomer = new CustomerWindow(0, name, last_name, middle_name);
+            WindowCustomer = new CustomerWindow(0, name, last_name, middle_name, foreman_number);
             WindowCustomer->show();
             this->close();
         }

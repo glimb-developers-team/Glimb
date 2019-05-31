@@ -7,10 +7,11 @@
 #include <QMessageBox>
 using namespace std;
 
-OrderWindow::OrderWindow(QWidget *parent, std::queue<std::string> clients_numbers) :
+OrderWindow::OrderWindow(QWidget *parent, std::queue<std::string> clients_numbers, std::string login) :
     QWidget(parent),
     ui(new Ui::OrderWindow),
-    clients_numbers(clients_numbers)
+    clients_numbers(clients_numbers),
+    _login(login)
 {
     try {
         ui->setupUi(this);
@@ -31,6 +32,8 @@ OrderWindow::OrderWindow(QWidget *parent, std::queue<std::string> clients_number
                 ui->tableWidget->setItem(i, 2, new QTableWidgetItem(buffer));
                 q.pop();
         }
+
+
     }
     catch (const char *error) {
         QMessageBox::critical(this, "Внимание!", error);
@@ -115,5 +118,5 @@ void OrderWindow::on_orderButton_clicked()
             LogPrinter::print(row.title);
         }
 
-    RequestFormer::to_send_purchase("79212965525",ui->comboBox->currentText().toUtf8().constData(),total_cost, orderList);
+    RequestFormer::to_send_purchase(_login,ui->comboBox->currentText().toUtf8().constData(),total_cost, orderList);
 }
