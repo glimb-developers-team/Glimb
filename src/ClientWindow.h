@@ -22,6 +22,8 @@ private slots:
 
     void on_but_clicked();
 
+    void on_pushButton_4_clicked();
+
 private:
     OrderWindow *oWindow;
     Ui::ClientWindow *ui;

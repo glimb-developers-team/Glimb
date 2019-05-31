@@ -37,6 +37,8 @@ SOURCES += \
     src/orderwindow.cpp \
     src/ClientWindow.cpp \
     src/ConfigReader.cpp \
+    src/CustomerWindow.cpp \
+    src/OrderCustomerWindow.cpp \
     CustomerWindow.cpp \
     OrderCustomerWindow.cpp
 
@@ -50,6 +52,8 @@ HEADERS += \
     src/orderwindow.h \
     src/ClientWindow.h \
     src/ConfigReader.h \
+    src/CustomerWindow.h \
+    src/OrderCustomerWindow.h \
     CustomerWindow.h \
     OrderCustomerWindow.h
 
@@ -59,5 +63,5 @@ FORMS += \
     form/RegistrationWindow.ui \
     form/orderwindow.ui \
     form/clientwindow.ui \
-    CustomerWindow.ui \
-    OrderCustomerWindow.ui
+    form/CustomerWindow.ui \
+    form/OrderCustomerWindow.ui
