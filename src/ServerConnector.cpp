@@ -14,7 +14,7 @@
 #include "ServerConnector.h"
 #include "LogPrinter.h"
 #include "requests.h"
-#ifdef __unix__
+#if defined(__unix__) || defined (TARGET_OS_MAC)
 	#include <sys/types.h>
 	#include <sys/socket.h>
 	#include <netinet/in.h>
@@ -34,7 +34,7 @@
 	{
 		close(sock);
 	}
-#elif defined _WIN32
+#elif defined(_WIN32)
 	#include <WS2tcpip.h>
 
 	#define SOCK SOCKET
