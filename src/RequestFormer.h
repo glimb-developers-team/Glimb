@@ -24,7 +24,7 @@ struct Material {
 struct Purchase {
 	std::string title;
 	int quantity;
-	double price;
+	double cost;
 };
 
 struct Buying {

@@ -16,6 +16,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include "ServerConnector.h"
+#include "LogPrinter.h"
 #include "requests.h"
 
 ServerConnector::ServerConnector() : _connected(false),
@@ -75,6 +76,7 @@ std::string ServerConnector::request(std::string request)
 
 	/* Sending request to the server */
 	snprintf(buffer, BUFFER_SIZE, "%s", request.c_str());
+	LogPrinter::print(std::string("Request: sending to the server: ") + buffer);
 	result = send(_sockfd, buffer, BUFFER_SIZE, 0);
 	if (result < 0) {
 		throw "Failed to send request to the server";
@@ -101,6 +103,7 @@ void ServerConnector::simple_request(std::string request)
 
 	/* Sending request to the server */
 	snprintf(buffer, BUFFER_SIZE, "%s", request.c_str());
+	LogPrinter::print(std::string("Simple request: sending to the server: ") + buffer);
 	result = send(_sockfd, buffer, BUFFER_SIZE, 0);
 	if (result < 0) {
 		throw "Failed to send request to the server";

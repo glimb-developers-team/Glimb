@@ -326,13 +326,12 @@ void RequestFormer::to_send_purchase(std::string foreman_number, std::string cli
 			std::string tmp_s = table.front().title.c_str();
 			tmp.SetString(table.front().title.c_str(), alloc);
 			obj.AddMember("title", tmp, alloc);
-			
 			if (sizeof(table.front().quantity) <= sizeof(long))
 			{
 				tmp = rapidjson::Value(table.front().quantity);
 				obj.AddMember("quantity", tmp, alloc);
 			}
-			tmp = rapidjson::Value(table.front().price);
+			tmp = rapidjson::Value(table.front().cost);
 			obj.AddMember("cost", tmp, alloc);
 
 			mat.PushBack(obj, alloc);
@@ -376,15 +375,11 @@ void RequestFormer::to_send_purchase(std::string foreman_number, std::string cli
 
 	if (_type_ == "ok")
 	{
-		buf = "\"type\" : ";
-		buf = buf + _type_ + "\n\"info\" {\n\t\n}";
-		//LogPrinter::print(buf);
+		LogPrinter::print(answer);
 	}
 	else
 	{
-		buf = "\"error\" : ";
-		buf = buf + new_document["info"]["description"].GetString();
-		//LogPrinter::print(buf);
+		LogPrinter::print(answer);
 		throw (const char*)new_document["info"]["description"].GetString();
 	}
 }
