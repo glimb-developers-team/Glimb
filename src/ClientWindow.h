@@ -15,7 +15,7 @@ class ClientWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit ClientWindow(QWidget *parent = 0, std::string name = "", std::string last_name = "", std::string middle_name = "", std::queue<std::string> clients_numbers = std::queue<std::string>());
+    explicit ClientWindow(QWidget *parent = 0, std::string name = "", std::string last_name = "", std::string middle_name = "", std::queue<std::string> clients_numbers = std::queue<std::string>(), std::string login = "");
     ~ClientWindow();
 
 private slots:
@@ -31,6 +31,7 @@ private:
     std::string last_name;
     std::string middle_name;
     std::queue<std::string> clients_numbers;
+    std::string _login;
 };
 
 #endif // CLIENTWINDOW_H

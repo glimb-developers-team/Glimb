@@ -13,7 +13,7 @@ class OrderWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit OrderWindow(QWidget *parent = 0, std::queue<std::string> clients_numbers = std::queue<std::string>());
+    explicit OrderWindow(QWidget *parent = 0, std::queue<std::string> clients_numbers = std::queue<std::string>(), std::string login = "");
     ~OrderWindow();
 
 private slots:
@@ -25,6 +25,7 @@ private slots:
 private:
     Ui::OrderWindow *ui;
     std::queue<std::string> clients_numbers;
+    std::string _login;
 };
 
 #endif // ORDERWINDOW_H
