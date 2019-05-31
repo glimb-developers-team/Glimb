@@ -24,28 +24,25 @@ struct Material {
 struct Purchase {
 	std::string title;
 	int quantity;
+	double cost;
 };
 
 struct Buying {
 	std::string title;
 	int quantity;
-	double price;
+	double cost;
 };
 
-struct ClientList {
-	std::string id;
-	bool evaluation;
-	std::queue <Buying> purchase;
-};
-
-struct ForemanList {
-	std::string id;
+struct ShoppingList{
+	int purchase_id;
+	double total_cost;
+	std::string status;
 	std::queue <Buying> purchase;
 };
 
 struct Evaluation {
 	std::string id;
-	bool evaluation;
+	std::string evaluation;
 };
 
 class RequestFormer {
@@ -132,22 +129,15 @@ public:
 	*Create JSON file from purchase and send it to server.
 	*/
 	static void to_send_purchase(std::string foreman_number, std::string client_number, 
-					std::queue <Purchase> table);
+					double total_cost, std::queue <Purchase> table);
 
 	/*
-	*to_show_purchses() - show 
+	*to_show_purchses() - show all purchases to user.
 	*Create JSON request to server, receive answer, parse it and return the queue of purchases.
 	*Else it can throw that no purshase exists.
 	*/
-	static std::queue <ForemanList> to_show_purchases(std::string foreman_number, 
+	static std::queue <ShoppingList> to_show_purchases(std::string foreman_number, 
 					std::string client_number);
-
-	/*
-	*to_get_purchses() - show all of purchases, which client can evaluate: agree(yes) or disagree(no) with purchase.
-	*Create JSON request to server, receive answer, parse it and return the queue of purchases.
-	*Else it can throw that no purshase exists.
-	*/
-	static std::queue <ClientList> to_get_purchases(std::string client_number);
 
 	/*
 	*to_send_evaluations() - send evaluations of purchases to server.
