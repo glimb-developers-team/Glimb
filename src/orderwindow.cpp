@@ -101,6 +101,7 @@ void OrderWindow::on_searchButton_clicked()
 void OrderWindow::on_orderButton_clicked()
 {
     queue <Purchase> orderList;
+    double total_cost = 0;
 
     for (int i = 0; i < ui->tableWidget->rowCount();i++)
         if (ui->tableWidget->item(i,3) != 0)
@@ -108,9 +109,11 @@ void OrderWindow::on_orderButton_clicked()
             Purchase row;
             row.title = ui->tableWidget->item(i,0)->text().toUtf8().constData();
             row.quantity = ui->tableWidget->item(i,3)->text().toInt();
+            row.cost = ui->tableWidget->item(i,2)->text().toDouble()*row.quantity;
+            total_cost += row.cost;
             orderList.push(row);
             LogPrinter::print(row.title);
         }
 
-    RequestFormer::to_send_purchase("79212965525",ui->comboBox->currentText().toUtf8().constData(),orderList);
+    RequestFormer::to_send_purchase("79212965525",ui->comboBox->currentText().toUtf8().constData(),total_cost, orderList);
 }

@@ -39,8 +39,8 @@ SOURCES += \
     src/ConfigReader.cpp \
     src/CustomerWindow.cpp \
     src/OrderCustomerWindow.cpp \
-    CustomerWindow.cpp \
-    OrderCustomerWindow.cpp
+    src/CustomerWindow.cpp \
+    src/OrderCustomerWindow.cpp
 
 
 HEADERS += \
@@ -54,8 +54,8 @@ HEADERS += \
     src/ConfigReader.h \
     src/CustomerWindow.h \
     src/OrderCustomerWindow.h \
-    CustomerWindow.h \
-    OrderCustomerWindow.h
+    src/CustomerWindow.h \
+    src/OrderCustomerWindow.h
 
 
 FORMS += \
