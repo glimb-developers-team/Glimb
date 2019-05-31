@@ -54,7 +54,7 @@ void RequestFormer::set_new_user(std::string& name, std::string& last_name,
 	_foreman_number = foreman_number;
 }
 
-void RequestFormer::enter_old_user(std::string& number, std::string& password)
+void RequestFormer::enter_old_user(std::string& number, std::string& password, std::string& foreman_number)
 {
 	_name = "";
 	_last_name = "";
@@ -62,7 +62,7 @@ void RequestFormer::enter_old_user(std::string& number, std::string& password)
 	_number = number;
 	_password = password;
 	_type = "";
-	_foreman_number = "";
+	_foreman_number = foreman_number;
 }
 
 rapidjson::Document RequestFormer::to_json(std::string request)
@@ -88,16 +88,6 @@ rapidjson::Document RequestFormer::to_json(std::string request)
 		info_val.AddMember("type", tmp, allocator);
 		tmp.SetString(rapidjson::StringRef(_foreman_number.c_str()));
 		info_val.AddMember("foreman_number", tmp, allocator);
-		document.AddMember("info", info_val, allocator);
-	}
-	else if (request == REQUEST_LOGIN) {
-		document.SetObject();
-		document.AddMember("request", REQUEST_LOGIN, allocator);
-		info_val.SetObject();
-		tmp.SetString(rapidjson::StringRef(_number.c_str()));
-		info_val.AddMember("number", tmp, allocator);
-		tmp.SetString(rapidjson::StringRef(_password.c_str()));
-		info_val.AddMember("password", tmp, allocator);
 		document.AddMember("info", info_val, allocator);
 	}
 	else if (request == REQUEST_GET_MATERIALS) {
@@ -177,15 +167,47 @@ void RequestFormer::to_register(std::string name, std::string last_name,
 void RequestFormer::to_enter(std::string number, std::string password,
 				std::string& name, std::string& last_name,
 				std::string& middle_name, std::string& type,
-				std::queue <std::string>& clients_numbers)
+				std::queue <std::string>& clients_numbers,
+				std::string foreman_number)
 {
 	/*
 	*First step: accept full data from user, generate it to JSON request
 	*and send to the server.
 	*/
 	RequestFormer sx;
-	sx.enter_old_user(number, password);
-	rapidjson::Document document = sx.to_json(REQUEST_LOGIN);
+	rapidjson::Value info_val, tmp;
+	rapidjson::Document document;
+	rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+
+	if (foreman_number != "")
+	{
+		sx.enter_old_user(number, password, foreman_number);
+
+		document.SetObject();
+		document.AddMember("request", REQUEST_LOGIN, allocator);
+		info_val.SetObject();
+		tmp.SetString(rapidjson::StringRef(sx._number.c_str()));
+		info_val.AddMember("number", tmp, allocator);
+		tmp.SetString(rapidjson::StringRef(sx._password.c_str()));
+		info_val.AddMember("password", tmp, allocator);
+		tmp.SetString(rapidjson::StringRef(sx._foreman_number.c_str()));
+		info_val.AddMember("foreman_number", tmp, allocator);
+		document.AddMember("info", info_val, allocator);
+	}
+	else
+	{
+		sx.enter_old_user(number, password, foreman_number);
+
+		document.SetObject();
+		document.AddMember("request", REQUEST_LOGIN, allocator);
+		info_val.SetObject();
+		tmp.SetString(rapidjson::StringRef(sx._number.c_str()));
+		info_val.AddMember("number", tmp, allocator);
+		tmp.SetString(rapidjson::StringRef(sx._password.c_str()));
+		info_val.AddMember("password", tmp, allocator);
+		document.AddMember("info", info_val, allocator);
+	}
+
 	rapidjson::StringBuffer buffer;
 	rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
 	document.Accept(writer);

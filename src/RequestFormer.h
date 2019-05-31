@@ -66,7 +66,7 @@ private:
 	/*
 	*enter_old_user() - need for more comfortable using in entrance process.
 	*/
-	void enter_old_user(std::string& number, std::string& password);
+	void enter_old_user(std::string& number, std::string& password, std::string& foreman_number);
 
 	/*
 	*to_json() - generate JSON request by rapidjson.
@@ -115,7 +115,8 @@ public:
 	static void to_enter(std::string number, std::string password, 
 					std::string& name, std::string& last_name,
 					std::string& middle_name, std::string& type,
-					std::queue <std::string>& clients_numbers);
+					std::queue <std::string>& clients_numbers,
+					std::string foreman_number);
 
 	/*
 	*to_get_materials() - send all of materials to foreman.
