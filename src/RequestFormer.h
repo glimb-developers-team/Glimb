@@ -89,12 +89,12 @@ public:
 	/*
 	*This method calls ServerConnector object to connect to server by static method.
 	*/
-	static void connect_to_server();
+	void connect_to_server();
 
 	/*
 	*This method closes connection by static method of ServerConnector class.
 	*/
-	static void disconnect();
+	void disconnect();
 
 	/*
 	*to_register() - register a new user's account.
@@ -103,7 +103,7 @@ public:
 	*can throw "Such user already exists", "Password is too short" or
 	*"Number of foreman is not right" of type const char *.
 	*/
-	static void to_register(std::string name, std::string last_name, std::string middle_name,
+	void to_register(std::string name, std::string last_name, std::string middle_name,
 		std::string number, std::string password, std::string type,
 		std::string foreman_number);
 
@@ -112,7 +112,7 @@ public:
 	*If such user exists or his password is wrong,
 	*can throw "User does not exist" or "Password is failed" of type const char *.
 	*/
-	static void to_enter(std::string number, std::string password, 
+	void to_enter(std::string number, std::string password, 
 					std::string& name, std::string& last_name,
 					std::string& middle_name, std::string& type,
 					std::queue <std::string>& clients_numbers);
@@ -122,13 +122,13 @@ public:
 	*Сreate JSON request to server, receive answer, parse it and return the queue of materials.
 	*Else it can throw that such objects do not exist.
 	*/
-	static std::queue <Material> to_get_materials();
+	std::queue <Material> to_get_materials();
 
 	/*
 	*to_send_materials() - choose materials for purchase and send it to server.
 	*Create JSON file from purchase and send it to server.
 	*/
-	static void to_send_purchase(std::string foreman_number, std::string client_number, 
+	void to_send_purchase(std::string foreman_number, std::string client_number, 
 					double total_cost, std::queue <Purchase> table);
 
 	/*
@@ -136,14 +136,14 @@ public:
 	*Create JSON request to server, receive answer, parse it and return the queue of purchases.
 	*Else it can throw that no purshase exists.
 	*/
-	static std::queue <ShoppingList> to_show_purchases(std::string foreman_number, 
+	std::queue <ShoppingList> to_show_purchases(std::string foreman_number, 
 					std::string client_number);
 
 	/*
 	*to_send_evaluations() - send evaluations of purchases to server.
 	*Create JSON file from parameters and send it to server.
 	*/
-	static void to_send_evaluations(std::string client_number, std::queue <Evaluation> table);
+	void to_send_evaluations(std::string client_number, std::queue <Evaluation> table);
 
 };
 
